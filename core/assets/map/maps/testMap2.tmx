@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="left-up" width="50" height="50" tilewidth="32" tileheight="32" nextobjectid="5">
+ <tileset firstgid="1" name="tmw_desert_spacing" tilewidth="32" tileheight="32" spacing="1" tilecount="48">
+  <image source="../tilesets/tmw_desert_spacing.png" width="265" height="199"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztzyESgDAQBMFL8YqAgijI///HCQQSETGhRrTdrakRsQ5Q0vFYBm1+taX99T+rZgeKHSx2sNjBYgeLHSx2sNjBYgeLHSx2sNjBYgeLHSx2sNjBYgeLHSx2sNjBYgeLHSx2sPyp40zX5Hq6AWS0S/g=
+  </data>
+ </layer>
+ <objectgroup name="collidable">
+  <object id="2" x="576" y="0" width="32" height="32"/>
+  <object id="3" x="672" y="0" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup name="linkable">
+  <object id="4" x="608" y="0" width="64" height="32">
+   <properties>
+    <property name="fromMap" value="testMap2"/>
+    <property name="fromName" value="N1"/>
+    <property name="toMap" value="testMap"/>
+    <property name="toName" value="S1"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>
