@@ -70,6 +70,13 @@ public class Creature extends DrawableObject{
 		}
 	}
 	
+	public void update(ArrayList<CollidableObject> collidableObjects) {
+		handleCollisions(collidableObjects);
+		//move player
+		this.offsetX += this.dx;
+		this.offsetY += this.dy;
+	}
+	
 	/**
 	 * Method to run through all the positions of the player and collidable objects on the map
 	 * to prevent player from walking into collidable objects

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.gdx.base.Creature;
 import com.gdx.input.Input;
@@ -22,7 +21,6 @@ public class Player extends Creature{
 	public String fromMap;
 	public String toLink;
 	public String fromLink;
-	
 	
 	//set input, x position, y position, offset, initialize
 	public Player(Input input, float x, float y) {
@@ -75,11 +73,8 @@ public class Player extends Creature{
 			this.dy = (movementSpeed*-1);
 			this.curAnim = walkingDown_anim;
 		}
-		handleCollisions(collidableObjects);
 		handleLinks(linkableObjects);
-		//move player
-		this.offsetX += this.dx;
-		this.offsetY += this.dy;
+		update(collidableObjects);
 	}
 	
 	public void handleLinks(ArrayList<LinkableObject> linkableObjects) {
