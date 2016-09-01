@@ -119,7 +119,7 @@ public class Core extends ApplicationAdapter {
 	//main method for the game loop
 	public void gameLoop() {
 		player.updatePlayer(collidableObjects, linkableObjects);
-		player.setPlayerDrawPositions(curMap.getLeftBound(), curMap.getRightBound(), curMap.getTopBound(), curMap.getBottomBound());
+		player.setDrawPositions(curMap.getLeftBound(), curMap.getRightBound(), curMap.getTopBound(), curMap.getBottomBound());
 		setCameraPosition();
 		handleLinks();
 	}
