@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayer;
@@ -33,14 +32,10 @@ public class Core extends ApplicationAdapter {
 	//input and player objects
 	Input input;
 	Player player;
-	Ruby ruby;
+	DrawableObjectManager drawableObjectManager;
 	
 	//camera
-    OrthographicCamera camera;
-    float cameraMaxX;
-    float cameraMinX;
-    float cameraMaxY;
-    float cameraMinY;
+    Camera camera;
 	
     //current interface for listener purposes - game, menu, etc
     Interface curInterface;
@@ -56,8 +51,8 @@ public class Core extends ApplicationAdapter {
     
 	@Override
 	public void create () {
-		initializeGame();
         batch = new SpriteBatch();
+		initializeGame();
 	}
 	
 	//initialize these before the game starts
@@ -65,17 +60,17 @@ public class Core extends ApplicationAdapter {
 		input = new Input();
 		//initialize player in the middle of the screen
 		player = new Player(input, (Gdx.graphics.getWidth()/2), (Gdx.graphics.getHeight()/2));
-		ruby = new Ruby(200, 200);
-		curInterface = Interface.GAME;
 		initializeCamera();
 		initializeMap("testMap");
+		drawableObjectManager = new DrawableObjectManager(batch, player, curMap, camera);
+		drawableObjectManager.addDrawableObject(new Ruby(200, 200));
 	}
 	
 	//initializes camera
 	public void initializeCamera() {
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
-        camera = new OrthographicCamera();
+        camera = new Camera();
         camera.setToOrtho(false,w,h);
         camera.update();
 	}
@@ -91,10 +86,10 @@ public class Core extends ApplicationAdapter {
         //get linkable properties of map
         addLinkableTiles();
         //set camera properties
-        cameraMinX = curMap.getLeftBound() + (Gdx.graphics.getWidth()/2);
-        cameraMinY = curMap.getBottomBound() + (Gdx.graphics.getHeight()/2);
-        cameraMaxX = curMap.getRightBound() - (Gdx.graphics.getWidth()/2);
-        cameraMaxY = curMap.getTopBound() - (Gdx.graphics.getHeight()/2);
+        camera.setCameraMinX(curMap.getLeftBound() + (Gdx.graphics.getWidth()/2));
+        camera.setCameraMinY(curMap.getBottomBound() + (Gdx.graphics.getHeight()/2));
+        camera.setCameraMaxX(curMap.getRightBound() - (Gdx.graphics.getWidth()/2));
+        camera.setCameraMaxY(curMap.getTopBound() - (Gdx.graphics.getHeight()/2));
 	}
 
 	//draw, call to main game loop here
@@ -116,7 +111,7 @@ public class Core extends ApplicationAdapter {
 		//elapsed time just goes up, the true param tells it to loop
 		elapsedTime += Gdx.graphics.getDeltaTime();
 		batch.draw(player.getCurAnim().getKeyFrame(elapsedTime, true), player.getXDrawPos(), player.getYDrawPos());
-		batch.draw(ruby.getCurAnim().getKeyFrame(elapsedTime, true), ruby.getXDrawPos(), ruby.getYDrawPos());
+		drawableObjectManager.drawDrawableObjects(elapsedTime);
 		batch.end();
 	}
 	
@@ -124,6 +119,7 @@ public class Core extends ApplicationAdapter {
 	public void gameLoop() {
 		player.updatePlayer(collidableObjects, linkableObjects);
 		player.setDrawPositions(curMap.getLeftBound(), curMap.getRightBound(), curMap.getTopBound(), curMap.getBottomBound());
+		drawableObjectManager.updateDrawableObjects();
 		setCameraPosition();
 		handleLinks();
 	}
@@ -135,20 +131,20 @@ public class Core extends ApplicationAdapter {
 			camera.position.x = player.getXOffset();
 		//player is at the left of the map
 		} else if(player.getXDrawPos() < player.getInitXPos()) {
-			camera.position.x = cameraMinX;
+			camera.position.x = camera.getCameraMinX();
 		//player is at the right of the map
 		} else if(player.getXDrawPos() > player.getInitXPos()) {
-			camera.position.x = cameraMaxX;
+			camera.position.x = camera.getCameraMaxX();
 		}
 		//player is not at a bound, evaluate as normal
 		if(player.getYDrawPos() == player.getInitYPos()) {
 			camera.position.y = player.getYOffset();
 		//player is at the bottom of the map
 		} else if(player.getYDrawPos() < player.getInitYPos()) {
-			camera.position.y = cameraMinY;
+			camera.position.y = camera.getCameraMinY();
 		//player is at the top of the map
 		} else if(player.getYDrawPos() > player.getInitYPos()) {
-			camera.position.y = cameraMaxY;
+			camera.position.y = camera.getCameraMaxY();
 		}
 	}
 	

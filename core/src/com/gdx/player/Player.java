@@ -10,7 +10,7 @@ import com.gdx.input.Input;
 import com.gdx.map.CollidableObject;
 import com.gdx.map.LinkableObject;
 
-public class Player extends Creature{
+public class Player extends Creature {
 	
 	//input passed in from Core.java to evaluate input directly from player class
 	Input input;
@@ -32,7 +32,7 @@ public class Player extends Creature{
 	//method to initialize default values for non-changing variables
 	public void initializePlayer() {
 
-		movementSpeed = 4f;
+		movementSpeed = 10f;
 		collisionBuffer = (int) (movementSpeed*2);
 		
 		//load texture atlases
