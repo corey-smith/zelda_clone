@@ -16,6 +16,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.gdx.base.Ruby;
 import com.gdx.input.Input;
 import com.gdx.input.Interface;
 import com.gdx.map.CollidableObject;
@@ -32,6 +33,7 @@ public class Core extends ApplicationAdapter {
 	//input and player objects
 	Input input;
 	Player player;
+	Ruby ruby;
 	
 	//camera
     OrthographicCamera camera;
@@ -63,6 +65,7 @@ public class Core extends ApplicationAdapter {
 		input = new Input();
 		//initialize player in the middle of the screen
 		player = new Player(input, (Gdx.graphics.getWidth()/2), (Gdx.graphics.getHeight()/2));
+		ruby = new Ruby(200, 200);
 		curInterface = Interface.GAME;
 		initializeCamera();
 		initializeMap("testMap");
@@ -113,6 +116,7 @@ public class Core extends ApplicationAdapter {
 		//elapsed time just goes up, the true param tells it to loop
 		elapsedTime += Gdx.graphics.getDeltaTime();
 		batch.draw(player.getCurAnim().getKeyFrame(elapsedTime, true), player.getXDrawPos(), player.getYDrawPos());
+		batch.draw(ruby.getCurAnim().getKeyFrame(elapsedTime, true), ruby.getXDrawPos(), ruby.getYDrawPos());
 		batch.end();
 	}
 	
