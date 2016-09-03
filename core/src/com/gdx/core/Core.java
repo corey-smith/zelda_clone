@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -15,7 +16,6 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Matrix4;
 import com.gdx.base.Ruby;
 import com.gdx.input.Input;
 import com.gdx.input.Interface;
@@ -37,6 +37,7 @@ public class Core extends ApplicationAdapter {
 	
 	//camera
     Camera camera;
+    InputMultiplexer inputMultiplexer;
 	
     //current interface for listener purposes - game, menu, etc
     Interface curInterface;
@@ -108,44 +109,48 @@ public class Core extends ApplicationAdapter {
         tiledMapRenderer.render();
 
         //draw sprites
+        batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		//elapsed time just goes up, the true param tells it to loop
 		elapsedTime += Gdx.graphics.getDeltaTime();
-		batch.draw(player.getCurAnim().getKeyFrame(elapsedTime, true), player.getXDrawPos(), player.getYDrawPos());
+		batch.draw(player.getCurAnim().getKeyFrame(elapsedTime, true), player.getXOffset(), player.getYOffset());
 		drawableObjectManager.drawDrawableObjects(elapsedTime);
 		batch.end();
+	}
+	
+	@Override
+	public void resize(int width, int height) {
+		
 	}
 	
 	//main method for the game loop
 	public void gameLoop() {
 		player.updatePlayer(collidableObjects, linkableObjects);
-		player.setDrawPositions(curMap.getLeftBound(), curMap.getRightBound(), curMap.getTopBound(), curMap.getBottomBound());
-		drawableObjectManager.updateDrawableObjects();
 		setCameraPosition();
 		handleLinks();
 	}
 	
 	//handle camera panning, basically follow the player
 	public void setCameraPosition() {
-		//player is not at a bound, evaluate as normal
-		if(player.getXDrawPos() == player.getInitXPos()) {
-			camera.position.x = player.getXOffset();
 		//player is at the left of the map
-		} else if(player.getXDrawPos() < player.getInitXPos()) {
+		if(player.getXOffset() <= camera.getCameraMinX()) {
 			camera.position.x = camera.getCameraMinX();
 		//player is at the right of the map
-		} else if(player.getXDrawPos() > player.getInitXPos()) {
+		} else if(player.getXOffset() >= camera.getCameraMaxX()) {
 			camera.position.x = camera.getCameraMaxX();
+		//follow player, set camera position to equal plaer's position
+		} else {
+			camera.position.x = player.getXOffset();
 		}
-		//player is not at a bound, evaluate as normal
-		if(player.getYDrawPos() == player.getInitYPos()) {
-			camera.position.y = player.getYOffset();
 		//player is at the bottom of the map
-		} else if(player.getYDrawPos() < player.getInitYPos()) {
+		if(player.getYOffset() <= camera.getCameraMinY()) {
 			camera.position.y = camera.getCameraMinY();
 		//player is at the top of the map
-		} else if(player.getYDrawPos() > player.getInitYPos()) {
+		} else if(player.getYOffset() >= camera.getCameraMaxY()) {
 			camera.position.y = camera.getCameraMaxY();
+		//follow player, set camera position to equal player's position
+		} else {
+			camera.position.y = player.getYOffset();
 		}
 	}
 	

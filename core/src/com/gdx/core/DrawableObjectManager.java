@@ -23,17 +23,9 @@ public class DrawableObjectManager {
 		drawableObjects = new ArrayList<DrawableObject>();
 	}
 	
-	protected void updateDrawableObjects() {
-		for(DrawableObject drawableObject : drawableObjects) {
-			drawableObject.drawPosX = drawableObject.getXOffset() - camera.getCameraPosX();
-			drawableObject.drawPosY = drawableObject.getYOffset() - camera.getCameraPosY();
-			System.out.println(camera.getCameraPosX());
-		}
-	}
-	
 	protected void drawDrawableObjects(float elapsedTime) {
 		for(DrawableObject drawableObject : drawableObjects) {
-			batch.draw(drawableObject.getCurAnim().getKeyFrame(elapsedTime, true), drawableObject.getXDrawPos(), drawableObject.getYDrawPos());
+			batch.draw(drawableObject.getCurAnim().getKeyFrame(elapsedTime, true), drawableObject.getXOffset(), drawableObject.getYOffset());
 		}
 	}
 	

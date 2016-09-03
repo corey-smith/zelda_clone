@@ -13,9 +13,6 @@ public class DrawableObject {
 	//location within the map
 	public float offsetX;
 	public float offsetY;
-	//location to draw object at
-	public float drawPosX;
-	public float drawPosY;
 	//width/height
 	public float width;
 	public float height;
@@ -37,33 +34,6 @@ public class DrawableObject {
 	//return current animation to draw in Core.java
 	public Animation getCurAnim() {
 		return curAnim;
-	}
-	
-	public void setDrawPosX(float leftBound, float rightBound) {
-		//if offset is < where player was initialized, player is against the left of the map
-		float tmpX = Math.min(this.initX, leftBound + this.offsetX);
-		//if difference between right bound and cur pos < initX, player is at the right of the screen
-		//find the difference between right bound and offsetX to use in finding the difference between initX and player, then add to initX
-		if((rightBound - this.offsetX) < this.initX) tmpX = this.initX + (this.initX - (rightBound - this.offsetX));
-		
-		this.drawPosX = tmpX;
-	}
-	
-	public void setDrawPosY(float topBound, float bottomBound) {
-		//if offset is < where player was initialized, player is against the bottom of the map
-		float tmpY = Math.min(this.initY, bottomBound + this.offsetY);
-		//if difference between top bound and cur pos < initY, player is at the top of the screen
-		//find the difference between top bound and offsetY to use in finding the difference between initY and player, then add to initY
-		if((topBound - this.offsetY) < this.initY) tmpY = this.initY + (this.initY - (topBound - this.offsetY));
-		this.drawPosY = tmpY;
-	}
-	
-	public float getXDrawPos() {
-		return drawPosX;
-	}
-	
-	public float getYDrawPos() {
-		return drawPosY;
 	}
 	
 	//get absolute player x position

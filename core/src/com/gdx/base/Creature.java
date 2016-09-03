@@ -132,10 +132,4 @@ public class Creature extends DrawableObject{
 			}
 		}
 	}
-	
-	public void setDrawPositions(float leftBound, float rightBound, float topBound, float bottomBound) {
-		this.setDrawPosX(leftBound, rightBound);
-		this.setDrawPosY(topBound, bottomBound);
-	}
-	
 }
