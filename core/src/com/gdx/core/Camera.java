@@ -1,5 +1,6 @@
 package com.gdx.core;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
 public class Camera extends OrthographicCamera{
@@ -39,6 +40,22 @@ public class Camera extends OrthographicCamera{
 	
 	public float getCameraMaxY() {
 		return this.cameraMaxY;
+	}
+	
+	/**
+	 * Get camera X at the left of camera rather than middle
+	 * @return
+	 */
+	public float getCameraPosX() {
+		return this.position.x - (Gdx.graphics.getWidth()/2);
+	}
+	
+	/**
+	 * Get camera Y at the bottom of camera rather than middle
+	 * @return
+	 */
+	public float getCameraPosY() {
+		return this.position.y - (Gdx.graphics.getHeight()/2);
 	}
 
 }

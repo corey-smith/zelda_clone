@@ -25,9 +25,9 @@ public class DrawableObjectManager {
 	
 	protected void updateDrawableObjects() {
 		for(DrawableObject drawableObject : drawableObjects) {
-			drawableObject.drawPosX = Math.min(Math.max(drawableObject.getXOffset() - camera.position.x,drawableObject.getInitXPos()), drawableObject.getInitXPos());
-			//drawableObject.drawPosX = Math.min(drawableObject.getXOffset() + (player.getInitXPos() - player.getXOffset()), drawableObject.getInitXPos());
-			//drawableObject.drawPosY = Math.min(drawableObject.getYOffset() + (player.getInitYPos() - player.getYOffset()), drawableObject.getInitYPos());
+			drawableObject.drawPosX = drawableObject.getXOffset() - camera.getCameraPosX();
+			drawableObject.drawPosY = drawableObject.getYOffset() - camera.getCameraPosY();
+			System.out.println(camera.getCameraPosX());
 		}
 	}
 	

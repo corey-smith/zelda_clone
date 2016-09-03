@@ -15,6 +15,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Matrix4;
 import com.gdx.base.Ruby;
 import com.gdx.input.Input;
 import com.gdx.input.Interface;
@@ -63,7 +64,7 @@ public class Core extends ApplicationAdapter {
 		initializeCamera();
 		initializeMap("testMap");
 		drawableObjectManager = new DrawableObjectManager(batch, player, curMap, camera);
-		drawableObjectManager.addDrawableObject(new Ruby(200, 200));
+		drawableObjectManager.addDrawableObject(new Ruby(300, 300));
 	}
 	
 	//initializes camera
