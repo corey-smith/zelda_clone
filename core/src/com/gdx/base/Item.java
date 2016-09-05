@@ -26,6 +26,7 @@ public class Item extends DrawableObject {
 		//we don't really care if a creature runs into an object, just if the player does
 		if(collider instanceof Player) {
 			//remove from map, add to player's inventory
+			System.out.println(collision);
 			drawableObjectContainer.remove(this);
 			Player player = (Player) collider;
 			player.getInventory().add(this);

@@ -57,37 +57,13 @@ public class DrawableObjectContainer {
 			DrawableObject drawableObject = drawableObjectIter.next();
 			if(drawableObject.isCollidable()) {
 				//see if there's a collision occurring with the player and this object
-				Collision collision = evaluateCollision(drawableObject, player);
+				Collision collision = CollisionUtil.evaluateCollision(drawableObject, player);
 				if(collision != null) {
 					//handle collision at the object level
 					drawableObject.handleCollision(collision, this, player);
 				}
 			}
 		}
-	}
-	
-	/**
-	 * Evaluate a collision between two objects and return the direction of the collision
-	 * @param drawableObject1
-	 * @param drawableObject2
-	 * @return collision
-	 */
-	private Collision evaluateCollision(DrawableObject drawableObject1, DrawableObject drawableObject2) {
-		Collision collision = null;
-		
-		Rectangle obj1Rect = new Rectangle(drawableObject1.getLeftBound(), drawableObject1.getBottomBound(), drawableObject1.getWidth(), drawableObject1.getHeight());
-		Rectangle obj2Rect = new Rectangle(drawableObject2.getLeftBound(), drawableObject2.getBottomBound(), drawableObject2.getWidth(), drawableObject2.getHeight());
-		Rectangle intersection = new Rectangle();
-		Intersector.intersectRectangles(obj1Rect, obj2Rect, intersection);
-		//if resulting intersection rectangle has a size, a collision has occurred
-		if(intersection.getWidth() > 0 && intersection.getHeight() > 0) {
-			if(intersection.x > obj1Rect.x) collision = Collision.RIGHT;
-			if(intersection.y > obj1Rect.y) collision = Collision.TOP;
-			if(intersection.x + intersection.width < obj1Rect.x + obj1Rect.width) collision = Collision.LEFT;
-			if(intersection.y + intersection.height < obj1Rect.y + obj1Rect.height) collision = Collision.BOTTOM;
-		}
-		
-		return collision;
 	}
 	
 	/**

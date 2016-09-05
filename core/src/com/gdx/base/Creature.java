@@ -75,7 +75,7 @@ public class Creature extends DrawableObject{
 	}
 	
 	public void update(ArrayList<CollidableObject> collidableObjects) {
-		handleCollisions(collidableObjects);
+		handleCollidableObjects(collidableObjects);
 		//move player
 		this.offsetX += this.dx;
 		this.offsetY += this.dy;
@@ -86,7 +86,7 @@ public class Creature extends DrawableObject{
 	 * to prevent player from walking into collidable objects
 	 * @param collidableObjects - arraylist of all collidable objects on the current map
 	 */
-	public void handleCollisions(ArrayList<CollidableObject> collidableObjects) {
+	public void handleCollidableObjects(ArrayList<CollidableObject> collidableObjects) {
 		float newOffsetX = (this.offsetX + this.dx);
 		float newOffsetY = (this.offsetY + this.dy);
 		//evaluate map bounds first
