@@ -5,10 +5,11 @@ import java.util.Iterator;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.gdx.map.Map;
 import com.gdx.core.DrawableObjectContainer;
 import com.gdx.map.CollidableObject;
 
-public class Creature extends DrawableObject{
+public abstract class Creature extends DrawableObject{
 
 	//protected Animation speed - hardcoded
 	protected Float animSpeed = 2/15f;
@@ -45,6 +46,17 @@ public class Creature extends DrawableObject{
 	
 	public Creature(float x, float y) {
 		super(x, y);
+		initialize();
+	}
+	
+	/**
+	 * Initialize creature
+	 */
+	private void initialize() {
+		initializeTextures();
+		loadAnimations();
+		setCurAnim(standingRight_anim);
+		setMovementSpeed();
 	}
 	
 	public void loadAnimations() {
@@ -56,32 +68,48 @@ public class Creature extends DrawableObject{
 		standingRight_anim = new Animation(animSpeed, standingRight_txtr.getRegions());
 		standingUp_anim = new Animation(animSpeed, standingUp_txtr.getRegions());
 		standingDown_anim = new Animation(animSpeed, standingDown_txtr.getRegions());
-	}
-	
-	//set default loop values for movement/animation
-	public void preLoop() {
-		this.dx = 0;
-		this.dy = 0;
-		if(this.curAnim == walkingLeft_anim || this.curAnim == standingLeft_anim) { 
-			this.curAnim = standingLeft_anim;
-		} else if(this.curAnim == walkingRight_anim || this.curAnim == standingRight_anim) {
-			this.curAnim = standingRight_anim;
-		} else if(this.curAnim == walkingUp_anim || this.curAnim == standingUp_anim) {
-			this.curAnim = standingUp_anim;
-			//default to something
-		} else {
-			this.curAnim = standingDown_anim;
-		}
-	}
-	
-	public void update(ArrayList<CollidableObject> collidableObjects) {
-		handleCollidableObjects(collidableObjects);
-		//move player
-		this.offsetX += this.dx;
-		this.offsetY += this.dy;
+		//default a starting animation
+		this.setCurAnim(standingDown_anim);
 	}
 	
 	/**
+	 * Set movement speed
+	 * @param movementSpeed
+	 */
+	protected void setMovementSpeed(float movementSpeed) {
+		this.movementSpeed = movementSpeed;
+		collisionBuffer = (int) (movementSpeed*2);
+	}
+	
+	/**
+	 * Default movement speed of 1
+	 */
+	void setMovementSpeed() {
+		this.setMovementSpeed(1f);
+	}
+	
+	@Override
+	public void update(ArrayList<CollidableObject> collidableObjects) {
+		handleCollidableObjects(collidableObjects);
+		//move creature
+		this.offsetX += this.dx;
+		this.offsetY += this.dy;
+		//handle animations
+		if(dx < 0) {
+			this.curAnim = walkingLeft_anim;
+		}
+		else if(dx > 0) {
+			this.curAnim = walkingRight_anim;
+		}
+		if(dy > 0) {
+			this.curAnim = walkingUp_anim;
+		} else if(dy < 0) {
+			this.curAnim = walkingDown_anim;
+		}
+	}
+	
+	/**
+	 * TODO:Replace this with the new collision util method
 	 * Method to run through all the positions of the player and collidable objects on the map
 	 * to prevent player from walking into collidable objects
 	 * @param collidableObjects - arraylist of all collidable objects on the current map
@@ -138,11 +166,11 @@ public class Creature extends DrawableObject{
 	}
 	
 	//set map bounds once here on initializing map to use in updating player
-	public void setMapBounds(float mapLeft, float mapRight, float mapTop, float mapBottom) {
-		this.mapLeft = mapLeft;
-		this.mapRight = mapRight;
-		this.mapTop = mapTop;
-		this.mapBottom = mapBottom;
+	public void setMapBounds(Map curMap) {
+		this.mapLeft = curMap.getLeftBound();
+		this.mapRight = curMap.getRightBound();
+		this.mapTop = curMap.getTopBound();
+		this.mapBottom = curMap.getBottomBound();
 	}
 
 	//TODO: handle creature collisions here
@@ -150,4 +178,7 @@ public class Creature extends DrawableObject{
 	public void handleCollision(Collision collision, DrawableObjectContainer drawableObjectContainer, DrawableObject collider) {
 	
 	}
+	
+	//load textures on a per-creature basis
+	protected abstract void initializeTextures();
 }

@@ -1,8 +1,11 @@
 package com.gdx.base;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.gdx.core.DrawableObjectContainer;
+import com.gdx.map.CollidableObject;
 import com.gdx.player.Player;
 
 public class Item extends DrawableObject {
@@ -26,11 +29,14 @@ public class Item extends DrawableObject {
 		//we don't really care if a creature runs into an object, just if the player does
 		if(collider instanceof Player) {
 			//remove from map, add to player's inventory
-			System.out.println(collision);
 			drawableObjectContainer.remove(this);
 			Player player = (Player) collider;
 			player.getInventory().add(this);
 		}
 	}
+
+	@Override
+	//we don't actually need to do any updates on items, override parent and do nothing
+	public void update(ArrayList<CollidableObject> collidableObjects) {}
 
 }

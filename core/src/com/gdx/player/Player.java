@@ -42,10 +42,16 @@ public class Player extends Creature {
 	 * Handling creation of player, loading images and initializing variables
 	 */
 	public void initializePlayer() {
-
-		movementSpeed = 5f;
-		collisionBuffer = (int) (movementSpeed*2);
 		
+		this.setMovementSpeed(5f);
+		this.inventory = new Inventory(this);
+	}
+	
+	/**
+	 * Initialize player textures
+	 */
+	@Override
+	public void initializeTextures() {
 		//load texture atlases
 		walkingLeft_txtr = new TextureAtlas(Gdx.files.internal("images/player/player_walk_left_pack"));
 		walkingRight_txtr = new TextureAtlas(Gdx.files.internal("images/player/player_walk_right_pack"));
@@ -55,15 +61,6 @@ public class Player extends Creature {
 		standingRight_txtr = new TextureAtlas(Gdx.files.internal("images/player/player_stand_right_pack"));
 		standingUp_txtr = new TextureAtlas(Gdx.files.internal("images/player/player_stand_up_pack"));
 		standingDown_txtr = new TextureAtlas(Gdx.files.internal("images/player/player_stand_down_pack"));
-		
-		loadAnimations();
-		
-		//set width and height to the first texture or any texture map as these should all be the same size
-		this.curAnim = standingRight_anim;
-		this.width = standingUp_txtr.findRegion("Link").originalWidth;
-		this.height = standingUp_txtr.findRegion("Link").originalHeight;
-		
-		this.inventory = new Inventory(this);
 	}
 	
 	/**
@@ -75,23 +72,38 @@ public class Player extends Creature {
 		preLoop();
 		//check all of the input values
 		if(input.leftHeld && !input.rightHeld) {
-			this.curAnim = walkingLeft_anim;
 			this.dx = (movementSpeed*-1);
 		}
 		if(input.rightHeld && !input.leftHeld) {
 			this.dx = movementSpeed;
-			this.curAnim = walkingRight_anim;
 		}
 		if(input.upHeld && !input.downHeld) {
 			this.dy = movementSpeed;
-			this.curAnim = walkingUp_anim;
 		}
 		if(input.downHeld && !input.upHeld) {
 			this.dy = (movementSpeed*-1);
-			this.curAnim = walkingDown_anim;
 		}
 		handleLinks(linkableObjects);
 		update(collidableObjects);
+	}
+	
+	//TODO: This needs to move to the creature class after AI is implemented for creatures
+	/**
+	 * Reset animations and delta values before actual looping logic
+	 */
+	public void preLoop() {
+		this.dx = 0;
+		this.dy = 0;
+		if(this.curAnim == walkingLeft_anim || this.curAnim == standingLeft_anim) { 
+			this.curAnim = standingLeft_anim;
+		} else if(this.curAnim == walkingRight_anim || this.curAnim == standingRight_anim) {
+			this.curAnim = standingRight_anim;
+		} else if(this.curAnim == walkingUp_anim || this.curAnim == standingUp_anim) {
+			this.curAnim = standingUp_anim;
+			//default to something
+		} else {
+			this.curAnim = standingDown_anim;
+		}
 	}
 	
 	/**

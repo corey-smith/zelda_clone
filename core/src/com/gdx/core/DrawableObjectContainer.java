@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.Rectangle;
+import com.gdx.map.CollidableObject;
 import com.gdx.map.Map;
 import com.gdx.base.Collision;
+import com.gdx.base.Creature;
 import com.gdx.base.DrawableObject;
 import com.gdx.player.Player;
 
@@ -19,6 +19,7 @@ public class DrawableObjectContainer {
 	Camera camera;
 	ArrayList<DrawableObject> drawableObjects;
 	Iterator<DrawableObject> drawableObjectIter;
+	ArrayList<CollidableObject> collidableObjects;
 	
 	/**
 	 * Container to hold all of the current drawable objects and coordinate between them
@@ -27,11 +28,12 @@ public class DrawableObjectContainer {
 	 * @param curMap
 	 * @param camera
 	 */
-	public DrawableObjectContainer(SpriteBatch batch, Player player, Map curMap, Camera camera) {
+	public DrawableObjectContainer(SpriteBatch batch, Player player, Map curMap, Camera camera, ArrayList<CollidableObject> collidableObjects) {
 		this.batch = batch;
 		this.player = player;
 		this.map = curMap;
 		this.camera = camera;
+		this.collidableObjects = collidableObjects;
 		drawableObjects = new ArrayList<DrawableObject>();
 	}
 	
@@ -63,6 +65,7 @@ public class DrawableObjectContainer {
 					drawableObject.handleCollision(collision, this, player);
 				}
 			}
+			drawableObject.update(collidableObjects);
 		}
 	}
 	
@@ -72,6 +75,10 @@ public class DrawableObjectContainer {
 	 */
 	public void add(DrawableObject drawableObject) {
 		this.drawableObjects.add(drawableObject);
+		if(drawableObject instanceof Creature) {
+			Creature creature = (Creature) drawableObject;
+			creature.setMapBounds(map);
+		}
 	}
 	
 	/**

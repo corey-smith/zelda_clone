@@ -16,6 +16,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.gdx.base.Orc;
 import com.gdx.base.Ruby;
 import com.gdx.input.Input;
 import com.gdx.input.Interface;
@@ -64,8 +65,10 @@ public class Core extends ApplicationAdapter {
 		player = new Player(input, (Gdx.graphics.getWidth()/2), (Gdx.graphics.getHeight()/2));
 		initializeCamera();
 		initializeMap("testMap");
-		drawableObjectContainer = new DrawableObjectContainer(batch, player, curMap, camera);
+		
+		drawableObjectContainer = new DrawableObjectContainer(batch, player, curMap, camera, collidableObjects);
 		drawableObjectContainer.add(new Ruby(300, 300));
+		drawableObjectContainer.add(new Orc(500, 400));
 	}
 	
 	//initializes camera
@@ -84,7 +87,7 @@ public class Core extends ApplicationAdapter {
 	    tiledMapRenderer = new OrthogonalTiledMapRenderer(curMap.tiledMap);
 	    //get collision properties of map
 	    addCollidableTiles();
-	    player.setMapBounds(curMap.getLeftBound(), curMap.getRightBound(), curMap.getTopBound(), curMap.getBottomBound());
+	    player.setMapBounds(curMap);
 	    //get linkable properties of map
 	    addLinkableTiles();
 	    //set camera properties

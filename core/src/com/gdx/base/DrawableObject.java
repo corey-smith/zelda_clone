@@ -1,7 +1,10 @@
 package com.gdx.base;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.gdx.core.DrawableObjectContainer;
+import com.gdx.map.CollidableObject;
 
 public abstract class DrawableObject {
 
@@ -121,4 +124,6 @@ public abstract class DrawableObject {
 	//handle collision given the object type, for the top-level drawableObject, don't do anything
 	public abstract void handleCollision(Collision collision, DrawableObjectContainer drawableObjectContainer, DrawableObject collider);
 	
+	//game loop logic
+	public abstract void update(ArrayList<CollidableObject> collidableObjects);
 }
