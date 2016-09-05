@@ -1,7 +1,6 @@
 package com.gdx.base;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import com.gdx.player.Player;
 

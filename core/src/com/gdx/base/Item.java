@@ -22,7 +22,6 @@ public class Item extends DrawableObject {
 	}
 
 	@Override
-	//TODO: Fix bug here that occurs when player is intersecting item side rather than corner
 	public void handleCollision(Collision collision, DrawableObjectContainer drawableObjectContainer, DrawableObject collider) {
 		//we don't really care if a creature runs into an object, just if the player does
 		if(collider instanceof Player) {
