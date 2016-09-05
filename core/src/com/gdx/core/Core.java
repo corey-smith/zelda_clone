@@ -33,7 +33,7 @@ public class Core extends ApplicationAdapter {
 	//input and player objects
 	Input input;
 	Player player;
-	DrawableObjectManager drawableObjectManager;
+	DrawableObjectContainer drawableObjectContainer;
 	
 	//camera
     Camera camera;
@@ -64,8 +64,8 @@ public class Core extends ApplicationAdapter {
 		player = new Player(input, (Gdx.graphics.getWidth()/2), (Gdx.graphics.getHeight()/2));
 		initializeCamera();
 		initializeMap("testMap");
-		drawableObjectManager = new DrawableObjectManager(batch, player, curMap, camera);
-		drawableObjectManager.addDrawableObject(new Ruby(300, 300));
+		drawableObjectContainer = new DrawableObjectContainer(batch, player, curMap, camera);
+		drawableObjectContainer.addDrawableObject(new Ruby(300, 300));
 	}
 	
 	//initializes camera
@@ -114,7 +114,7 @@ public class Core extends ApplicationAdapter {
 		//elapsed time just goes up, the true param tells it to loop
 		elapsedTime += Gdx.graphics.getDeltaTime();
 		batch.draw(player.getCurAnim().getKeyFrame(elapsedTime, true), player.getXOffset(), player.getYOffset());
-		drawableObjectManager.drawDrawableObjects(elapsedTime);
+		drawableObjectContainer.drawDrawableObjects(elapsedTime);
 		batch.end();
 	}
 	
@@ -126,6 +126,7 @@ public class Core extends ApplicationAdapter {
 	//main method for the game loop
 	public void gameLoop() {
 		player.updatePlayer(collidableObjects, linkableObjects);
+		drawableObjectContainer.updateDrawableObjects();
 		setCameraPosition();
 		handleLinks();
 	}

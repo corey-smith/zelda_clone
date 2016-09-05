@@ -32,7 +32,7 @@ public class Player extends Creature {
 	//method to initialize default values for non-changing variables
 	public void initializePlayer() {
 
-		movementSpeed = 10f;
+		movementSpeed = 5f;
 		collisionBuffer = (int) (movementSpeed*2);
 		
 		//load texture atlases

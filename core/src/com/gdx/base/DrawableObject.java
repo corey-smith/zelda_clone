@@ -1,8 +1,9 @@
 package com.gdx.base;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.gdx.core.DrawableObjectContainer;
 
-public class DrawableObject {
+public abstract class DrawableObject {
 
 	//current animation of object
 	public Animation curAnim;
@@ -16,6 +17,8 @@ public class DrawableObject {
 	//width/height
 	public float width;
 	public float height;
+	
+	public boolean collidable;
 	
 	//x/y values of map bounds
 	protected float mapLeft, mapRight, mapTop, mapBottom;
@@ -96,6 +99,16 @@ public class DrawableObject {
 		return this.offsetY;
 	}
 	
+	//set collidable boolean
+	public void setCollidable(boolean collidable) {
+		this.collidable = collidable;
+	}
+	
+	//get collidable boolean
+	public boolean isCollidable() {
+		return this.collidable;
+	}
+	
 	//set map bounds once here on initializing map to use in updating player
 	public void setMapBounds(float mapLeft, float mapRight, float mapTop, float mapBottom) {
 		this.mapLeft = mapLeft;
@@ -103,5 +116,8 @@ public class DrawableObject {
 		this.mapTop = mapTop;
 		this.mapBottom = mapBottom;
 	}
+	
+	//handle collision given the object type, for the top-level drawableObject, don't do anything
+	public abstract void handleCollision(DrawableObjectContainer drawableObjectContainer, DrawableObject collider);
 	
 }

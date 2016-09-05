@@ -5,6 +5,7 @@ import java.util.Iterator;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.gdx.core.DrawableObjectContainer;
 import com.gdx.map.CollidableObject;
 
 public class Creature extends DrawableObject{
@@ -131,5 +132,11 @@ public class Creature extends DrawableObject{
 				}
 			}
 		}
+	}
+
+	//TODO: handle creature collisions here
+	@Override
+	public void handleCollision(DrawableObjectContainer drawableObjectContainer, DrawableObject collider) {
+	
 	}
 }
