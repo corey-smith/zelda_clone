@@ -6,6 +6,7 @@ import java.util.Iterator;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.gdx.base.Creature;
+import com.gdx.base.Inventory;
 import com.gdx.input.Input;
 import com.gdx.map.CollidableObject;
 import com.gdx.map.LinkableObject;
@@ -15,6 +16,9 @@ public class Player extends Creature {
 	//input passed in from Core.java to evaluate input directly from player class
 	Input input;
 	
+	//player's inventory, should only have 1
+	Inventory inventory;
+	
 	//variables to determine when the player is walking to another map
 	public boolean linking = false;
 	public String toMap;
@@ -22,14 +26,21 @@ public class Player extends Creature {
 	public String toLink;
 	public String fromLink;
 	
-	//set input, x position, y position, offset, initialize
+	/**
+	 * Player in game, directly controlled by input, controls camera as well
+	 * @param input
+	 * @param x
+	 * @param y
+	 */
 	public Player(Input input, float x, float y) {
 		super(x, y);
 		this.input = input;
 		initializePlayer();
 	}
 	
-	//method to initialize default values for non-changing variables
+	/**
+	 * Handling creation of player, loading images and initializing variables
+	 */
 	public void initializePlayer() {
 
 		movementSpeed = 5f;
@@ -51,9 +62,15 @@ public class Player extends Creature {
 		this.curAnim = standingRight_anim;
 		this.width = standingUp_txtr.findRegion("Link").originalWidth;
 		this.height = standingUp_txtr.findRegion("Link").originalHeight;
+		
+		this.inventory = new Inventory(this);
 	}
 	
-	//player update from main game loop
+	/**
+	 * Main game loop logic for player
+	 * @param collidableObjects
+	 * @param linkableObjects
+	 */
 	public void updatePlayer(ArrayList<CollidableObject> collidableObjects, ArrayList<LinkableObject> linkableObjects) {
 		preLoop();
 		//check all of the input values
@@ -77,6 +94,11 @@ public class Player extends Creature {
 		update(collidableObjects);
 	}
 	
+	/**
+	 * TODO: Rework this to make it less messy
+	 * Logic to handle links between maps
+	 * @param linkableObjects
+	 */
 	public void handleLinks(ArrayList<LinkableObject> linkableObjects) {
 		Iterator<LinkableObject> linkableObjectIter = linkableObjects.iterator();
 		while(linkableObjectIter.hasNext()) {
@@ -109,5 +131,13 @@ public class Player extends Creature {
 				this.toLink = null;
 			}
 		}
+	}
+	
+	/**
+	 * Get player's inventory
+	 * @return Inventory
+	 */
+	public Inventory getInventory() {
+		return this.inventory;
 	}
 }

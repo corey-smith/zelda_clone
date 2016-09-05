@@ -1,9 +1,11 @@
 package com.gdx.core;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.gdx.map.Map;
+import com.gdx.base.Collision;
 import com.gdx.base.DrawableObject;
 import com.gdx.player.Player;
 
@@ -14,6 +16,7 @@ public class DrawableObjectContainer {
 	Map map;
 	Camera camera;
 	ArrayList<DrawableObject> drawableObjects;
+	Iterator<DrawableObject> drawableObjectIter;
 	
 	/**
 	 * Container to hold all of the current drawable objects and coordinate between them
@@ -35,7 +38,9 @@ public class DrawableObjectContainer {
 	 * @param elapsedTime
 	 */
 	protected void drawDrawableObjects(float elapsedTime) {
-		for(DrawableObject drawableObject : drawableObjects) {
+		drawableObjectIter = drawableObjects.iterator();
+		while(drawableObjectIter.hasNext()) {
+			DrawableObject drawableObject = drawableObjectIter.next();
 			batch.draw(drawableObject.getCurAnim().getKeyFrame(elapsedTime, true), drawableObject.getXOffset(), drawableObject.getYOffset());
 		}
 	}
@@ -45,13 +50,15 @@ public class DrawableObjectContainer {
 	 * This will probably need to be expanded or reworked to handle collisions between creatures
 	 */
 	protected void updateDrawableObjects() {
-		for(DrawableObject drawableObject : drawableObjects) {
+		drawableObjectIter = drawableObjects.iterator();
+		while(drawableObjectIter.hasNext()) {
+			DrawableObject drawableObject = drawableObjectIter.next();
 			if(drawableObject.isCollidable()) {
 				//see if there's a collision occurring with the player and this object
-				boolean collision = evaluateCollision(drawableObject, player);
-				if(collision) {
+				Collision collision = evaluateCollision(drawableObject, player);
+				if(collision != null) {
 					//handle collision at the object level
-					drawableObject.handleCollision(this, player);
+					drawableObject.handleCollision(collision, this, player);
 				}
 			}
 		}
@@ -63,15 +70,15 @@ public class DrawableObjectContainer {
 	 * @param drawableObject2
 	 * @return 
 	 */
-	private boolean evaluateCollision(DrawableObject drawableObject1, DrawableObject drawableObject2) {
-		boolean collision = false;
-		
+	private Collision evaluateCollision(DrawableObject drawableObject1, DrawableObject drawableObject2) {
+		Collision collision = null;
 		boolean horizontalCollision = false;
 		boolean verticalCollision = false;
 		boolean leftCollision = false;
 		boolean rightCollision = false;
 		boolean topCollision = false;
 		boolean bottomCollision = false;
+		
 		//collision on drawableObject 1's right side, drawableObject 2's left side
 		if(drawableObject1.getRightBound() > drawableObject2.getLeftBound() && drawableObject1.getRightBound() < drawableObject2.getRightBound()) {
 			rightCollision = true;
@@ -88,10 +95,18 @@ public class DrawableObjectContainer {
 		if(drawableObject1.getBottomBound() > drawableObject2.getBottomBound() && drawableObject1.getBottomBound() < drawableObject2.getTopBound()) {
 			bottomCollision = true;
 		}
-		if(rightCollision || leftCollision) horizontalCollision = true;
+		if(leftCollision || rightCollision) horizontalCollision = true;
 		if(topCollision || bottomCollision) verticalCollision = true;
 		if(horizontalCollision && verticalCollision) {
-			collision = true;
+			if(leftCollision) {
+				if(bottomCollision) collision = Collision.BOTTOMLEFT;
+				else if(topCollision) collision = Collision.TOPLEFT;
+				else collision = Collision.LEFT;
+			} else if(rightCollision) {
+				if(bottomCollision) collision = Collision.BOTTOMRIGHT;
+				else if(topCollision) collision = Collision.TOPRIGHT;
+				else collision = Collision.RIGHT;
+			}
 		}
 		
 		return collision;
@@ -101,7 +116,7 @@ public class DrawableObjectContainer {
 	 * Add objects to this container
 	 * @param drawableObject
 	 */
-	protected void addDrawableObject(DrawableObject drawableObject) {
+	public void add(DrawableObject drawableObject) {
 		this.drawableObjects.add(drawableObject);
 	}
 	
@@ -109,7 +124,8 @@ public class DrawableObjectContainer {
 	 * Remove objects from the container
 	 * @param drawableObject
 	 */
-	protected void removeDrawableObject(DrawableObject drawableObject) {
+	public void remove(DrawableObject drawableObject) {
+		this.drawableObjectIter.remove();
 		this.drawableObjects.remove(drawableObject);
 	}
 	

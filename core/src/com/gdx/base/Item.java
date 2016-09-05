@@ -18,14 +18,18 @@ public class Item extends DrawableObject {
 	
 	protected void setTxtr(TextureAtlas txtr) {
 		this.txtr = txtr;
-		this.curAnim = new Animation(animSpeed, txtr.getRegions());
+		this.setCurAnim(new Animation(animSpeed, txtr.getRegions()));
 	}
 
 	@Override
-	public void handleCollision(DrawableObjectContainer drawableObjectContainer, DrawableObject collider) {
+	//TODO: Fix bug here that occurs when player is intersecting item side rather than corner
+	public void handleCollision(Collision collision, DrawableObjectContainer drawableObjectContainer, DrawableObject collider) {
 		//we don't really care if a creature runs into an object, just if the player does
 		if(collider instanceof Player) {
-			System.out.println("COLLISION");
+			//remove from map, add to player's inventory
+			drawableObjectContainer.remove(this);
+			Player player = (Player) collider;
+			player.getInventory().add(this);
 		}
 	}
 

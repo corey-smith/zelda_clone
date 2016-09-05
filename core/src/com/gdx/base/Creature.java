@@ -19,6 +19,9 @@ public class Creature extends DrawableObject{
 	//creature delta location values
 	public float dx;
 	public float dy;
+	
+	//x/y values of map bounds
+	protected float mapLeft, mapRight, mapTop, mapBottom;
 
 	//texture atlases for each protected Animation
 	protected TextureAtlas walkingLeft_txtr;
@@ -133,10 +136,18 @@ public class Creature extends DrawableObject{
 			}
 		}
 	}
+	
+	//set map bounds once here on initializing map to use in updating player
+	public void setMapBounds(float mapLeft, float mapRight, float mapTop, float mapBottom) {
+		this.mapLeft = mapLeft;
+		this.mapRight = mapRight;
+		this.mapTop = mapTop;
+		this.mapBottom = mapBottom;
+	}
 
 	//TODO: handle creature collisions here
 	@Override
-	public void handleCollision(DrawableObjectContainer drawableObjectContainer, DrawableObject collider) {
+	public void handleCollision(Collision collision, DrawableObjectContainer drawableObjectContainer, DrawableObject collider) {
 	
 	}
 }

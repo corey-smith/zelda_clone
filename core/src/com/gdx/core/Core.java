@@ -36,13 +36,13 @@ public class Core extends ApplicationAdapter {
 	DrawableObjectContainer drawableObjectContainer;
 	
 	//camera
-    Camera camera;
-    InputMultiplexer inputMultiplexer;
+	Camera camera;
+	InputMultiplexer inputMultiplexer;
 	
-    //current interface for listener purposes - game, menu, etc
-    Interface curInterface;
+	//current interface for listener purposes - game, menu, etc
+	Interface curInterface;
 	
-    //all collidable objects on the map
+	//all collidable objects on the map
 	ArrayList<CollidableObject> collidableObjects = new ArrayList<CollidableObject>();
 	//all linkable objects on the map
 	ArrayList<LinkableObject> linkableObjects = new ArrayList<LinkableObject>();
@@ -50,7 +50,7 @@ public class Core extends ApplicationAdapter {
 	//current map, renderer for maps
 	Map curMap;
 	TiledMapRenderer tiledMapRenderer;
-    
+	
 	@Override
 	public void create () {
 	    batch = new SpriteBatch();
@@ -65,7 +65,7 @@ public class Core extends ApplicationAdapter {
 		initializeCamera();
 		initializeMap("testMap");
 		drawableObjectContainer = new DrawableObjectContainer(batch, player, curMap, camera);
-		drawableObjectContainer.addDrawableObject(new Ruby(300, 300));
+		drawableObjectContainer.add(new Ruby(300, 300));
 	}
 	
 	//initializes camera
@@ -80,7 +80,7 @@ public class Core extends ApplicationAdapter {
 	//initializes map
 	public void initializeMap(String mapName) {
 		TiledMap tmpMap = new TmxMapLoader().load("map/maps/" + mapName + ".tmx");
-		curMap = new Map(tmpMap);
+	 	curMap = new Map(tmpMap);
 	    tiledMapRenderer = new OrthogonalTiledMapRenderer(curMap.tiledMap);
 	    //get collision properties of map
 	    addCollidableTiles();
