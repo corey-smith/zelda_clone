@@ -48,12 +48,12 @@ public class Core extends ApplicationAdapter {
 	ArrayList<LinkableObject> linkableObjects = new ArrayList<LinkableObject>();
 	
 	//current map, renderer for maps
-    Map curMap;
-    TiledMapRenderer tiledMapRenderer;
+	Map curMap;
+	TiledMapRenderer tiledMapRenderer;
     
 	@Override
 	public void create () {
-        batch = new SpriteBatch();
+	    batch = new SpriteBatch();
 		initializeGame();
 	}
 	
@@ -70,30 +70,30 @@ public class Core extends ApplicationAdapter {
 	
 	//initializes camera
 	public void initializeCamera() {
-        float w = Gdx.graphics.getWidth();
-        float h = Gdx.graphics.getHeight();
-        camera = new Camera();
-        camera.setToOrtho(false,w,h);
-        camera.update();
+	    float w = Gdx.graphics.getWidth();
+	    float h = Gdx.graphics.getHeight();
+	    camera = new Camera();
+	    camera.setToOrtho(false,w,h);
+	    camera.update();
 	}
 	
 	//initializes map
 	public void initializeMap(String mapName) {
 		TiledMap tmpMap = new TmxMapLoader().load("map/maps/" + mapName + ".tmx");
 		curMap = new Map(tmpMap);
-        tiledMapRenderer = new OrthogonalTiledMapRenderer(curMap.tiledMap);
-        //get collision properties of map
-        addCollidableTiles();
-        player.setMapBounds(curMap.getLeftBound(), curMap.getRightBound(), curMap.getTopBound(), curMap.getBottomBound());
-        //get linkable properties of map
-        addLinkableTiles();
-        //set camera properties
-        camera.setCameraMinX(curMap.getLeftBound() + (Gdx.graphics.getWidth()/2));
-        camera.setCameraMinY(curMap.getBottomBound() + (Gdx.graphics.getHeight()/2));
-        camera.setCameraMaxX(curMap.getRightBound() - (Gdx.graphics.getWidth()/2));
-        camera.setCameraMaxY(curMap.getTopBound() - (Gdx.graphics.getHeight()/2));
+	    tiledMapRenderer = new OrthogonalTiledMapRenderer(curMap.tiledMap);
+	    //get collision properties of map
+	    addCollidableTiles();
+	    player.setMapBounds(curMap.getLeftBound(), curMap.getRightBound(), curMap.getTopBound(), curMap.getBottomBound());
+	    //get linkable properties of map
+	    addLinkableTiles();
+	    //set camera properties
+	    camera.setCameraMinX(curMap.getLeftBound() + (Gdx.graphics.getWidth()/2));
+	    camera.setCameraMinY(curMap.getBottomBound() + (Gdx.graphics.getHeight()/2));
+	    camera.setCameraMaxX(curMap.getRightBound() - (Gdx.graphics.getWidth()/2));
+	    camera.setCameraMaxY(curMap.getTopBound() - (Gdx.graphics.getHeight()/2));
 	}
-
+	
 	//draw, call to main game loop here
 	@Override
 	public void render () {
@@ -104,12 +104,12 @@ public class Core extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		//draw the tile map
-        camera.update();
-        tiledMapRenderer.setView(camera);
-        tiledMapRenderer.render();
-
-        //draw sprites
-        batch.setProjectionMatrix(camera.combined);
+	    camera.update();
+	    tiledMapRenderer.setView(camera);
+	    tiledMapRenderer.render();
+	
+	    //draw sprites
+	    batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		//elapsed time just goes up, the true param tells it to loop
 		elapsedTime += Gdx.graphics.getDeltaTime();
