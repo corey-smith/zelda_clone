@@ -1,16 +1,19 @@
-package com.gdx.base;
+package com.gdx.player;
 
 import java.util.ArrayList;
 
-import com.gdx.player.Player;
+import com.gdx.base.Item;
 
+/**
+ * Player inventory, this is essentially just a wrapper class for an ArrayList of items
+ */
 public class Inventory {
 
 	Player player;
 	ArrayList<Item> items;
 	
 	/**
-	 * Player inventory, this is essentially just a wrapper class for an ArrayList of items
+	 * Inventory constructor, given owner Player class
 	 * @param player
 	 */
 	public Inventory(Player player) {

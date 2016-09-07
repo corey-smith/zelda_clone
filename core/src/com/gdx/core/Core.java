@@ -58,7 +58,9 @@ public class Core extends ApplicationAdapter {
 		initializeGame();
 	}
 	
-	//initialize these before the game starts
+	/**
+	 * initialize these before the game starts
+	 */
 	public void initializeGame() {
 		input = new Input();
 		//initialize player in the middle of the screen
@@ -71,7 +73,9 @@ public class Core extends ApplicationAdapter {
 		drawableObjectContainer.add(new Orc(500, 400));
 	}
 	
-	//initializes camera
+	/**
+	 * initializes camera
+	 */
 	public void initializeCamera() {
 	    float w = Gdx.graphics.getWidth();
 	    float h = Gdx.graphics.getHeight();
@@ -80,7 +84,10 @@ public class Core extends ApplicationAdapter {
 	    camera.update();
 	}
 	
-	//initializes map
+	/**
+	 * initializes map
+	 * @param mapName
+	 */
 	public void initializeMap(String mapName) {
 		TiledMap tmpMap = new TmxMapLoader().load("map/maps/" + mapName + ".tmx");
 	 	curMap = new Map(tmpMap);
@@ -121,12 +128,9 @@ public class Core extends ApplicationAdapter {
 		batch.end();
 	}
 	
-	@Override
-	public void resize(int width, int height) {
-		
-	}
-	
-	//main method for the game loop
+	/**
+	 * main method for the game loop
+	 */
 	public void gameLoop() {
 		player.updatePlayer(collidableObjects, linkableObjects);
 		drawableObjectContainer.updateDrawableObjects();
@@ -134,7 +138,9 @@ public class Core extends ApplicationAdapter {
 		handleLinks();
 	}
 	
-	//handle camera panning, basically follow the player
+	/**
+	 * handle camera panning, basically follow the player
+	 */
 	public void setCameraPosition() {
 		//player is at the left of the map
 		if(player.getXOffset() <= camera.getCameraMinX()) {
@@ -158,7 +164,9 @@ public class Core extends ApplicationAdapter {
 		}
 	}
 	
-	//see if player is currently on a link, and pan/reset the map as necessary
+	/**
+	 * see if player is currently on a link, and pan/reset the map as necessary
+	 */
 	public void handleLinks() {
 		if(player.linking) {
 			initializeMap(player.toMap);

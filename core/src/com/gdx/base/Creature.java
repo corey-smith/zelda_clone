@@ -9,6 +9,9 @@ import com.gdx.map.Map;
 import com.gdx.core.DrawableObjectContainer;
 import com.gdx.map.CollidableObject;
 
+/**
+ * Generic Creature class, essentially any DrawableObject that can move is a creature
+ */
 public abstract class Creature extends DrawableObject{
 
 	//protected Animation speed - hardcoded
@@ -23,6 +26,9 @@ public abstract class Creature extends DrawableObject{
 	
 	//x/y values of map bounds
 	protected float mapLeft, mapRight, mapTop, mapBottom;
+	
+	//current behavior of creature
+	public Behavior curBehavior = null;
 
 	//texture atlases for each protected Animation
 	protected TextureAtlas walkingLeft_txtr;
@@ -44,6 +50,11 @@ public abstract class Creature extends DrawableObject{
 	protected Animation standingDown_anim;
 	protected Animation standingUp_anim;
 	
+	/**
+	 * Creature constructor, takes the x and y coordinates of creature
+	 * @param x
+	 * @param y
+	 */
 	public Creature(float x, float y) {
 		super(x, y);
 		initialize();
@@ -59,6 +70,9 @@ public abstract class Creature extends DrawableObject{
 		setMovementSpeed();
 	}
 	
+	/**
+	 * Generic method to load animations - assumes the different walking/standing textures have been instantiated
+	 */
 	public void loadAnimations() {
 		walkingLeft_anim = new Animation(animSpeed, walkingLeft_txtr.getRegions());
 		walkingRight_anim = new Animation(animSpeed, walkingRight_txtr.getRegions());
@@ -88,8 +102,38 @@ public abstract class Creature extends DrawableObject{
 		this.setMovementSpeed(1f);
 	}
 	
+	/**
+	 * Get movement speed of creature
+	 * @return 
+	 */
+	public float getMovementSpeed() {
+		return this.movementSpeed;
+	}
+	
+	/**
+	 * Set creature's behavior
+	 */
+	public void setCurBehavior(Behavior curBehavior) {
+		this.curBehavior = curBehavior;
+	}
+	
+	/**
+	 * Get creature's current behavior
+	 * @return curBehavior
+	 */
+	public Behavior getCurBehavior() {
+		return this.curBehavior;
+	}
+	
+	/**
+	 * Main loop logic for updating a creature
+	 * executes the current behavior and handles animation and collidables
+	 */
 	@Override
 	public void update(ArrayList<CollidableObject> collidableObjects) {
+		if(this.curBehavior != null) {
+			curBehavior.execute();
+		}
 		handleCollidableObjects(collidableObjects);
 		//move creature
 		this.offsetX += this.dx;
@@ -165,7 +209,10 @@ public abstract class Creature extends DrawableObject{
 		}
 	}
 	
-	//set map bounds once here on initializing map to use in updating player
+	/**
+	 * set map bounds once here on initializing map to use in updating player
+	 * @param curMap
+	 */
 	public void setMapBounds(Map curMap) {
 		this.mapLeft = curMap.getLeftBound();
 		this.mapRight = curMap.getRightBound();
@@ -179,6 +226,8 @@ public abstract class Creature extends DrawableObject{
 	
 	}
 	
-	//load textures on a per-creature basis
+	/**
+	 * load textures on a per-creature basis
+	 */
 	protected abstract void initializeTextures();
 }

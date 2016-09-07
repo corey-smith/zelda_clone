@@ -3,7 +3,7 @@ package com.gdx.base;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
-public class Orc extends AiCreature {
+public class Orc extends Creature {
 	
 	/**
 	 * Orc class, ideally each creature won't be hard-coded like this and creatures
@@ -13,7 +13,7 @@ public class Orc extends AiCreature {
 	 */
 	public Orc(float x, float y) {
 		super(x, y);
-		this.dx = movementSpeed*-1;
+		this.setCurBehavior(new WalkToBehavior(this, 0, 400));
 	}
 	
 	@Override

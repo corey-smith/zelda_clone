@@ -6,7 +6,6 @@ import java.util.Iterator;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.gdx.base.Creature;
-import com.gdx.base.Inventory;
 import com.gdx.input.Input;
 import com.gdx.map.CollidableObject;
 import com.gdx.map.LinkableObject;
