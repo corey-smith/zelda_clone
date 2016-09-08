@@ -2,14 +2,14 @@ package com.gdx.base;
 
 public abstract class Behavior {
 
-	Creature creature;
+	BehaviorPattern behaviorPattern;
 	
 	/**
-	 * Abstract class to dictate where a creature should be moving to
+	 * Abstract class to dictate where a creature should be doing
 	 * @param creature
 	 */
-	public Behavior(Creature creature) {
-		this.creature = creature;
+	public Behavior(BehaviorPattern behaviorPattern) {
+		this.behaviorPattern = behaviorPattern;
 	}
 	
 	/**

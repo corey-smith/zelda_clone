@@ -28,7 +28,7 @@ public abstract class Creature extends DrawableObject{
 	protected float mapLeft, mapRight, mapTop, mapBottom;
 	
 	//current behavior of creature
-	public Behavior curBehavior = null;
+	public BehaviorPattern behaviorPattern = null;
 
 	//texture atlases for each protected Animation
 	protected TextureAtlas walkingLeft_txtr;
@@ -111,10 +111,18 @@ public abstract class Creature extends DrawableObject{
 	}
 	
 	/**
-	 * Set creature's behavior
+	 * Set creature's behavior pattern
 	 */
-	public void setCurBehavior(Behavior curBehavior) {
-		this.curBehavior = curBehavior;
+	public void setCurBehaviorPattern(BehaviorPattern behaviorPattern) {
+		this.behaviorPattern = behaviorPattern;
+	}
+	
+	/**
+	 * Get creature's behavior pattern
+	 * @return curBehavior
+	 */
+	public BehaviorPattern getBehaviorPattern() {
+		return this.behaviorPattern;
 	}
 	
 	/**
@@ -122,7 +130,9 @@ public abstract class Creature extends DrawableObject{
 	 * @return curBehavior
 	 */
 	public Behavior getCurBehavior() {
-		return this.curBehavior;
+		Behavior tmpBehavior = null;
+		if(this.behaviorPattern != null) tmpBehavior = this.behaviorPattern.getCurBehavior();
+		return tmpBehavior;
 	}
 	
 	/**
@@ -131,8 +141,8 @@ public abstract class Creature extends DrawableObject{
 	 */
 	@Override
 	public void update(ArrayList<CollidableObject> collidableObjects) {
-		if(this.curBehavior != null) {
-			curBehavior.execute();
+		if(this.getCurBehavior() != null) {
+			this.getCurBehavior().execute();
 		}
 		handleCollidableObjects(collidableObjects);
 		//move creature

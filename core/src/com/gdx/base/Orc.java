@@ -1,5 +1,8 @@
 package com.gdx.base;
 
+import java.awt.Point;
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
@@ -13,7 +16,11 @@ public class Orc extends Creature {
 	 */
 	public Orc(float x, float y) {
 		super(x, y);
-		this.setCurBehavior(new WalkToBehavior(this, 0, 400));
+		ArrayList<Point> route = new ArrayList<Point>();
+		route.add(new Point(400, 400));
+		route.add(new Point(500, 400));
+		WalkToPointsBehaviorPattern routeBehavior = new WalkToPointsBehaviorPattern(this, route);
+		this.setCurBehaviorPattern(routeBehavior);
 	}
 	
 	@Override
