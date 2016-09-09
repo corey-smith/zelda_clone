@@ -237,10 +237,10 @@ public abstract class Creature extends DrawableObject{
 	 * Handle collision, don't allow creature to walk further in the direction of the collision
 	 */
 	public void collide(Collision collision) {
-		if((collision == Collision.TOP || collision == Collision.TOPLEFT || collision == Collision.TOPRIGHT) && this.dy > 0) this.dy = 0;
-		if((collision == Collision.BOTTOM || collision == Collision.BOTTOMLEFT || collision == Collision.BOTTOMRIGHT) && this.dy < 0) this.dy = 0;
-		if((collision == Collision.LEFT || collision == Collision.TOPLEFT || collision == Collision.BOTTOMLEFT) && this.dx < 0) this.dx = 0;
-		if((collision == Collision.RIGHT || collision == Collision.TOPRIGHT || collision == Collision.BOTTOMRIGHT) && this.dx > 0) this.dx = 0;
+		if(collision == Collision.TOP && this.dy > 0) this.dy = 0;
+		if(collision == Collision.BOTTOM && this.dy < 0) this.dy = 0;
+		if(collision == Collision.LEFT && this.dx < 0) this.dx = 0;
+		if(collision == Collision.RIGHT && this.dx > 0) this.dx = 0;
 	}
 	
 	/**
