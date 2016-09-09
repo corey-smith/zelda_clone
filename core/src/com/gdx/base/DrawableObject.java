@@ -1,10 +1,7 @@
 package com.gdx.base;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.gdx.core.DrawableObjectContainer;
-import com.gdx.map.CollidableObject;
 
 /**
  * Generic object class for anything that can be drawn on screen, should be creatures and items
@@ -185,7 +182,7 @@ public abstract class DrawableObject {
 	}
 	
 	/**
-	 * handle collision given the object type, for the top-level drawableObject, don't do anything
+	 * handle collision given the object type
 	 * @param collision
 	 * @param drawableObjectContainer
 	 * @param collider

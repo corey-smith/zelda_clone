@@ -34,7 +34,6 @@ public class Player extends Creature {
 	public Player(Input input, float x, float y) {
 		super(x, y);
 		this.input = input;
-		this.collidable = true;
 		initializePlayer();
 	}
 	

@@ -74,7 +74,7 @@ public class Core extends ApplicationAdapter {
 		Orc orc1 = new Orc(500, 400);
 		Orc orc2 = new Orc(400, 400);
 		ArrayList<Point> route = new ArrayList<Point>();
-		route.add(new Point(300, 400));
+		route.add(new Point(400, 400));
 		route.add(new Point(500, 400));
 		WalkToPointsBehaviorPattern routeBehavior = new WalkToPointsBehaviorPattern(orc1, route);
 		orc1.setCurBehaviorPattern(routeBehavior);

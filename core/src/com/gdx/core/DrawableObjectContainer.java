@@ -69,6 +69,7 @@ public class DrawableObjectContainer {
 						Collision collision = CollisionUtil.evaluateCollision(drawableObject, otherDrawableObject);
 						if(collision != null) {
 							//handle collision at the object level
+							if(drawableObject instanceof Creature) ((Creature) drawableObject).collide(collision);
 							drawableObject.handleCollision(collision, this, otherDrawableObject);
 						}
 					}

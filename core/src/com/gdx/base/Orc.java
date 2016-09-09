@@ -1,8 +1,5 @@
 package com.gdx.base;
 
-import java.awt.Point;
-import java.util.ArrayList;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
