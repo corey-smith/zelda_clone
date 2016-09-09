@@ -7,7 +7,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.gdx.base.Creature;
 import com.gdx.input.Input;
-import com.gdx.map.CollidableObject;
 import com.gdx.map.LinkableObject;
 
 public class Player extends Creature {
@@ -64,10 +63,9 @@ public class Player extends Creature {
 	
 	/**
 	 * Main game loop logic for player
-	 * @param collidableObjects
 	 * @param linkableObjects
 	 */
-	public void updatePlayer(ArrayList<CollidableObject> collidableObjects, ArrayList<LinkableObject> linkableObjects) {
+	public void updatePlayer(ArrayList<LinkableObject> linkableObjects) {
 		preLoop();
 		//check all of the input values
 		if(input.leftHeld && !input.rightHeld) {

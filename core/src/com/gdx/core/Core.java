@@ -17,11 +17,12 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.gdx.base.Collidable;
 import com.gdx.base.Orc;
 import com.gdx.base.WalkToPointsBehaviorPattern;
 import com.gdx.input.Input;
 import com.gdx.input.Interface;
-import com.gdx.map.CollidableObject;
+import com.gdx.map.CollidableMapComponent;
 import com.gdx.map.Direction;
 import com.gdx.map.LinkableObject;
 import com.gdx.player.Player;
@@ -45,7 +46,7 @@ public class Core extends ApplicationAdapter {
 	Interface curInterface;
 	
 	//all collidable objects on the map
-	ArrayList<CollidableObject> collidableObjects = new ArrayList<CollidableObject>();
+	ArrayList<Collidable> collidableObjects = new ArrayList<Collidable>();
 	//all linkable objects on the map
 	ArrayList<LinkableObject> linkableObjects = new ArrayList<LinkableObject>();
 	
@@ -221,7 +222,7 @@ public class Core extends ApplicationAdapter {
 			float objHeight = collidableObject.getRectangle().height;
 			MapProperties objProperties = collidableObject.getProperties();
 			//initialize object and add to the arraylist
-			CollidableObject curObj = new CollidableObject(objX, objY, objWidth, objHeight, objProperties);
+			CollidableMapComponent curObj = new CollidableMapComponent(objX, objY, objWidth, objHeight, objProperties);
 			collidableObjects.add(curObj);
 		}
 	}

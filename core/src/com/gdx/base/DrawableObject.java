@@ -6,7 +6,7 @@ import com.gdx.core.DrawableObjectContainer;
 /**
  * Generic object class for anything that can be drawn on screen, should be creatures and items
  */
-public abstract class DrawableObject {
+public abstract class DrawableObject implements Collidable {
 
 	//current animation of object
 	public Animation curAnim;

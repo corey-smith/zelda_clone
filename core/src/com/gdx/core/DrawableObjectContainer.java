@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.gdx.map.CollidableObject;
 import com.gdx.map.LinkableObject;
 import com.gdx.map.Map;
-import com.gdx.base.Collision;
+import com.gdx.base.Collidable;
 import com.gdx.base.Creature;
 import com.gdx.base.DrawableObject;
 import com.gdx.player.Player;
@@ -20,7 +19,7 @@ public class DrawableObjectContainer {
 	Camera camera;
 	ArrayList<DrawableObject> drawableObjects;
 	Iterator<DrawableObject> drawableObjectIter;
-	ArrayList<CollidableObject> collidableObjects;
+	ArrayList<Collidable> collidableObjects;
 	ArrayList<LinkableObject> linkableObjects;
 	
 	/**
@@ -30,7 +29,7 @@ public class DrawableObjectContainer {
 	 * @param curMap
 	 * @param camera
 	 */
-	public DrawableObjectContainer(SpriteBatch batch, Player player, Map curMap, Camera camera, ArrayList<CollidableObject> collidableObjects, ArrayList<LinkableObject> linkableObjects) {
+	public DrawableObjectContainer(SpriteBatch batch, Player player, Map curMap, Camera camera, ArrayList<Collidable> collidableObjects, ArrayList<LinkableObject> linkableObjects) {
 		this.batch = batch;
 		this.player = player;
 		this.map = curMap;
@@ -60,21 +59,8 @@ public class DrawableObjectContainer {
 		drawableObjectIter = drawableObjects.iterator();
 		while(drawableObjectIter.hasNext()) {
 			DrawableObject drawableObject = drawableObjectIter.next();
-			if(drawableObject instanceof Player) ((Player) drawableObject).updatePlayer(collidableObjects, linkableObjects);
+			if(drawableObject instanceof Player) ((Player) drawableObject).updatePlayer(linkableObjects);
 			if(drawableObject instanceof Creature) updateDrawableCreature((Creature) drawableObject);
-			if(drawableObject.isCollidable()) {
-				//evaluate collisions with other objects
-				for(DrawableObject otherDrawableObject : drawableObjects) {
-					if(otherDrawableObject.isCollidable()) {
-						Collision collision = CollisionUtil.evaluateCollision(drawableObject, otherDrawableObject);
-						if(collision != null) {
-							//handle collision at the object level
-							if(drawableObject instanceof Creature) ((Creature) drawableObject).collide(collision);
-							drawableObject.handleCollision(collision, this, otherDrawableObject);
-						}
-					}
-				}
-			}
 			drawableObject.update();
 		}
 	}
@@ -85,7 +71,10 @@ public class DrawableObjectContainer {
 	 */
 	private void updateDrawableCreature(Creature creature) {
 		if(creature.getBehaviorPattern() != null) creature.getCurBehavior().execute();
-		creature.handleCollidableObjects(collidableObjects);
+		//evaluate collisions with other objects
+		for(Collidable collidable : collidableObjects) {
+			if(!collidable.equals(creature)) creature.handleCollidableObject(collidable);
+		}
 	}
 	
 	/**
@@ -98,6 +87,7 @@ public class DrawableObjectContainer {
 			Creature creature = (Creature) drawableObject;
 			creature.setMapBounds(map);
 		}
+		if(drawableObject.isCollidable()) collidableObjects.add(drawableObject);
 	}
 	
 	/**

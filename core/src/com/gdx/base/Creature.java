@@ -1,18 +1,14 @@
 package com.gdx.base;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.gdx.map.Map;
 import com.gdx.core.DrawableObjectContainer;
-import com.gdx.map.CollidableObject;
 
 /**
  * Generic Creature class, essentially any DrawableObject that can move is a creature
  */
-public abstract class Creature extends DrawableObject{
+public abstract class Creature extends DrawableObject {
 
 	//protected Animation speed - hardcoded
 	protected Float animSpeed = 2/15f;
@@ -160,12 +156,10 @@ public abstract class Creature extends DrawableObject{
 	}
 	
 	/**
-	 * TODO:Replace this with the new collision util method
-	 * Method to run through all the positions of the player and collidable objects on the map
-	 * to prevent player from walking into collidable objects
-	 * @param collidableObjects - arraylist of all collidable objects on the current map
+	 * Method to run evaluate collision with other collidable objects and stop creature from walking through them
+	 * @param collidableObject - current collidable object being evaluated
 	 */
-	public void handleCollidableObjects(ArrayList<CollidableObject> collidableObjects) {
+	public void handleCollidableObject(Collidable collidableObject) {
 		float newOffsetX = (this.offsetX + this.dx);
 		float newOffsetY = (this.offsetY + this.dy);
 		//evaluate map bounds first
@@ -178,40 +172,31 @@ public abstract class Creature extends DrawableObject{
 		
 		//don't run through this logic if there's no movement to process
 		if(dx != 0 || dy != 0) {
-			//loop through collidable tiles and find all collisions
-			Iterator<CollidableObject> collidableObjectIter = collidableObjects.iterator();
-			while(collidableObjectIter.hasNext()) {
-				boolean xColl = false;
-				boolean yColl = false;
-				CollidableObject curObj = collidableObjectIter.next();
-				float playerLeft = this.getLeftBound();
-				float playerRight = this.getRightBound();
-				float playerTop = this.getTopBound();
-				float playerBottom = this.getBottomBound();
-				float objectLeft = curObj.getLeftBound();
-				float objectRight = curObj.getRightBound();
-				float objectTop = curObj.getTopBound();
-				float objectBottom = curObj.getBottomBound();
-				//new Y is between the tiles X bounds
-				if(newOffsetX + this.width > objectLeft && newOffsetX < objectRight) {
-					xColl = true;
-				}
-				//new Y is between the tile's Y bounds
-				if(newOffsetY + this.height > objectBottom && newOffsetY < objectTop) {
-					yColl = true;
-				}
-				//new X and Y will be somewhere within the tile's X/Y bounds
-				//this if statement indicates there is a collision
-				if(xColl && yColl) {
-					//collision to the right - if traveling right and x value is to the left of the object's right bound and current Y value is between object's Y bounds
-					if(playerRight - collisionBuffer <= objectLeft && (playerTop > objectBottom && playerBottom < objectTop)) dx = 0;
-					//collision to the left - if traveling left and x value is to the right of the object's left bound and current Y value is between object's Y bounds
-					else if(playerLeft < objectRight + collisionBuffer && (playerTop > objectBottom && playerBottom < objectTop)) dx = 0;
-					//collision above - if traveling up and y value is below the object's bottom bound and current X value is between object's X bounds
-					if(playerTop - collisionBuffer <= objectBottom && (playerRight > objectLeft && playerLeft < objectRight)) dy = 0;
-					//collision below - if traveling down and y value is above the object's top bound and current X value is between object's X bounds
-					else if(playerBottom < objectTop + collisionBuffer && (playerRight > objectLeft && playerLeft < objectRight)) dy = 0;
-				}
+			boolean xColl = false;
+			boolean yColl = false;
+			float creatureLeft = this.getLeftBound();
+			float creatureRight = this.getRightBound();
+			float creatureTop = this.getTopBound();
+			float creatureBottom = this.getBottomBound();
+			float objectLeft = collidableObject.getLeftBound();
+			float objectRight = collidableObject.getRightBound();
+			float objectTop = collidableObject.getTopBound();
+			float objectBottom = collidableObject.getBottomBound();
+			//new Y is between the tiles X bounds
+			if(newOffsetX + this.width > objectLeft && newOffsetX < objectRight) xColl = true;
+			//new Y is between the tile's Y bounds
+			if(newOffsetY + this.height > objectBottom && newOffsetY < objectTop) yColl = true;
+			//new X and Y will be somewhere within the tile's X/Y bounds
+			//this if statement indicates there is a collision
+			if(xColl && yColl) {
+				//collision to the right - if traveling right and x value is to the left of the object's right bound and current Y value is between object's Y bounds
+				if(creatureRight - collisionBuffer <= objectLeft && (creatureTop > objectBottom && creatureBottom < objectTop)) this.dx = 0;
+				//collision to the left - if traveling left and x value is to the right of the object's left bound and current Y value is between object's Y bounds
+				else if(creatureLeft < objectRight + collisionBuffer && (creatureTop > objectBottom && creatureBottom < objectTop)) this.dx = 0;
+				//collision above - if traveling up and y value is below the object's bottom bound and current X value is between object's X bounds
+				if(creatureTop - collisionBuffer <= objectBottom && (creatureRight > objectLeft && creatureLeft < objectRight)) this.dy = 0;
+				//collision below - if traveling down and y value is above the object's top bound and current X value is between object's X bounds
+				else if(creatureBottom < objectTop + collisionBuffer && (creatureRight > objectLeft && creatureLeft < objectRight)) this.dy = 0;
 			}
 		}
 	}
