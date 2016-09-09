@@ -140,11 +140,7 @@ public abstract class Creature extends DrawableObject{
 	 * executes the current behavior and handles animation and collidables
 	 */
 	@Override
-	public void update(ArrayList<CollidableObject> collidableObjects) {
-		if(this.getCurBehavior() != null) {
-			this.getCurBehavior().execute();
-		}
-		handleCollidableObjects(collidableObjects);
+	public void update() {
 		//move creature
 		this.offsetX += this.dx;
 		this.offsetY += this.dy;

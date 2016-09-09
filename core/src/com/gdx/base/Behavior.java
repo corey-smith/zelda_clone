@@ -16,5 +16,5 @@ public abstract class Behavior {
 	 * Actual method to dictate what the creature should be doing
 	 * called from the update method of Creature
 	 */
-	abstract void execute();
+	public abstract void execute();
 }

@@ -1,11 +1,9 @@
 package com.gdx.base;
 
-import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.gdx.core.DrawableObjectContainer;
-import com.gdx.map.CollidableObject;
 import com.gdx.player.Player;
 
 public class Item extends DrawableObject {
@@ -37,6 +35,6 @@ public class Item extends DrawableObject {
 
 	@Override
 	//we don't actually need to do any updates on items, override parent and do nothing
-	public void update(ArrayList<CollidableObject> collidableObjects) {}
+	public void update() {}
 
 }

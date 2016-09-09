@@ -5,6 +5,7 @@ import java.util.Iterator;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.gdx.map.CollidableObject;
+import com.gdx.map.LinkableObject;
 import com.gdx.map.Map;
 import com.gdx.base.Collision;
 import com.gdx.base.Creature;
@@ -20,6 +21,7 @@ public class DrawableObjectContainer {
 	ArrayList<DrawableObject> drawableObjects;
 	Iterator<DrawableObject> drawableObjectIter;
 	ArrayList<CollidableObject> collidableObjects;
+	ArrayList<LinkableObject> linkableObjects;
 	
 	/**
 	 * Container to hold all of the current drawable objects and coordinate between them
@@ -28,12 +30,13 @@ public class DrawableObjectContainer {
 	 * @param curMap
 	 * @param camera
 	 */
-	public DrawableObjectContainer(SpriteBatch batch, Player player, Map curMap, Camera camera, ArrayList<CollidableObject> collidableObjects) {
+	public DrawableObjectContainer(SpriteBatch batch, Player player, Map curMap, Camera camera, ArrayList<CollidableObject> collidableObjects, ArrayList<LinkableObject> linkableObjects) {
 		this.batch = batch;
 		this.player = player;
 		this.map = curMap;
 		this.camera = camera;
 		this.collidableObjects = collidableObjects;
+		this.linkableObjects = linkableObjects;
 		drawableObjects = new ArrayList<DrawableObject>();
 	}
 	
@@ -57,16 +60,31 @@ public class DrawableObjectContainer {
 		drawableObjectIter = drawableObjects.iterator();
 		while(drawableObjectIter.hasNext()) {
 			DrawableObject drawableObject = drawableObjectIter.next();
+			if(drawableObject instanceof Player) ((Player) drawableObject).updatePlayer(collidableObjects, linkableObjects);
+			if(drawableObject instanceof Creature) updateDrawableCreature((Creature) drawableObject);
 			if(drawableObject.isCollidable()) {
-				//see if there's a collision occurring with the player and this object
-				Collision collision = CollisionUtil.evaluateCollision(drawableObject, player);
-				if(collision != null) {
-					//handle collision at the object level
-					drawableObject.handleCollision(collision, this, player);
+				//evaluate collisions with other objects
+				for(DrawableObject otherDrawableObject : drawableObjects) {
+					if(otherDrawableObject.isCollidable()) {
+						Collision collision = CollisionUtil.evaluateCollision(drawableObject, otherDrawableObject);
+						if(collision != null) {
+							//handle collision at the object level
+							drawableObject.handleCollision(collision, this, otherDrawableObject);
+						}
+					}
 				}
 			}
-			drawableObject.update(collidableObjects);
+			drawableObject.update();
 		}
+	}
+	
+	/**
+	 * Update logic specific to creatures
+	 * mainly handling collidable stuff and behaviors
+	 */
+	private void updateDrawableCreature(Creature creature) {
+		if(creature.getBehaviorPattern() != null) creature.getCurBehavior().execute();
+		creature.handleCollidableObjects(collidableObjects);
 	}
 	
 	/**

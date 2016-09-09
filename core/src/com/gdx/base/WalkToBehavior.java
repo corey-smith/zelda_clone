@@ -32,7 +32,7 @@ public class WalkToBehavior extends Behavior {
 	 * Walk directly towards destination, go to next behavior if the destination is reached
 	 */
 	@Override
-	void execute() {
+	public void execute() {
 		boolean xMet = false;
 		boolean yMet = false;
 		if(this.getCreature().getXOffset() < this.point.x) this.getCreature().dx = this.getCreature().getMovementSpeed();

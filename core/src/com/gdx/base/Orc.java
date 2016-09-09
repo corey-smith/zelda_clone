@@ -16,11 +16,6 @@ public class Orc extends Creature {
 	 */
 	public Orc(float x, float y) {
 		super(x, y);
-		ArrayList<Point> route = new ArrayList<Point>();
-		route.add(new Point(400, 400));
-		route.add(new Point(500, 400));
-		WalkToPointsBehaviorPattern routeBehavior = new WalkToPointsBehaviorPattern(this, route);
-		this.setCurBehaviorPattern(routeBehavior);
 	}
 	
 	@Override

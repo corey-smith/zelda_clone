@@ -194,7 +194,6 @@ public abstract class DrawableObject {
 	
 	/**
 	 * game loop logic
-	 * @param collidableObjects
 	 */
-	public abstract void update(ArrayList<CollidableObject> collidableObjects);
+	public abstract void update();
 }

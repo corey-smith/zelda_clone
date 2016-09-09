@@ -34,6 +34,7 @@ public class Player extends Creature {
 	public Player(Input input, float x, float y) {
 		super(x, y);
 		this.input = input;
+		this.collidable = true;
 		initializePlayer();
 	}
 	
@@ -83,7 +84,6 @@ public class Player extends Creature {
 			this.dy = (movementSpeed*-1);
 		}
 		handleLinks(linkableObjects);
-		update(collidableObjects);
 	}
 	
 	//TODO: This needs to move to the creature class after AI is implemented for creatures

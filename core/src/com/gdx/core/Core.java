@@ -1,5 +1,6 @@
 package com.gdx.core;
 
+import java.awt.Point;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.ApplicationAdapter;
@@ -17,7 +18,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.gdx.base.Orc;
-import com.gdx.base.Ruby;
+import com.gdx.base.WalkToPointsBehaviorPattern;
 import com.gdx.input.Input;
 import com.gdx.input.Interface;
 import com.gdx.map.CollidableObject;
@@ -68,9 +69,21 @@ public class Core extends ApplicationAdapter {
 		initializeCamera();
 		initializeMap("testMap");
 		
-		drawableObjectContainer = new DrawableObjectContainer(batch, player, curMap, camera, collidableObjects);
-		drawableObjectContainer.add(new Ruby(300, 300));
-		drawableObjectContainer.add(new Orc(500, 400));
+		drawableObjectContainer = new DrawableObjectContainer(batch, player, curMap, camera, collidableObjects, linkableObjects);
+		
+		Orc orc1 = new Orc(500, 400);
+		Orc orc2 = new Orc(400, 400);
+		ArrayList<Point> route = new ArrayList<Point>();
+		route.add(new Point(300, 400));
+		route.add(new Point(500, 400));
+		WalkToPointsBehaviorPattern routeBehavior = new WalkToPointsBehaviorPattern(orc1, route);
+		orc1.setCurBehaviorPattern(routeBehavior);
+		WalkToPointsBehaviorPattern routeBehavior2 = new WalkToPointsBehaviorPattern(orc2, route);
+		orc2.setCurBehaviorPattern(routeBehavior2);
+		
+		drawableObjectContainer.add(orc1);
+		drawableObjectContainer.add(orc2);
+		drawableObjectContainer.add(player);
 	}
 	
 	/**
@@ -132,7 +145,6 @@ public class Core extends ApplicationAdapter {
 	 * main method for the game loop
 	 */
 	public void gameLoop() {
-		player.updatePlayer(collidableObjects, linkableObjects);
 		drawableObjectContainer.updateDrawableObjects();
 		setCameraPosition();
 		handleLinks();
