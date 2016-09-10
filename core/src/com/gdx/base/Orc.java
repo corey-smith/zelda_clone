@@ -2,6 +2,7 @@ package com.gdx.base;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.gdx.player.Player;
 
 public class Orc extends Creature {
 	
@@ -27,5 +28,18 @@ public class Orc extends Creature {
 		standingUp_txtr = new TextureAtlas(Gdx.files.internal("images/creatures/orc_stand_up.atlas"));
 		standingDown_txtr = new TextureAtlas(Gdx.files.internal("images/creatures/orc_stand_down.atlas"));
 		this.loadAnimations();
+	}
+	
+	//TODO: make this more generic, separate out a default hostile behavior and put all of this in the creature class instead of here
+	@Override
+	public void handleProximity(Creature otherCreature) {
+		if(otherCreature instanceof Player) {
+			double playerDistance = getDistanceBetweenObject(otherCreature);
+			if(playerDistance <= 75) {
+				this.getBehaviorPattern().setCurBehavior(new FollowBehavior(this.getBehaviorPattern(), otherCreature));
+			} else if(playerDistance > 150 && this.getCurBehavior() instanceof FollowBehavior) {
+				this.setCurBehaviorPattern(this.getDefaultBehaviorPattern());
+			}
+		}
 	}
 }

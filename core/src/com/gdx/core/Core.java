@@ -19,7 +19,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.gdx.base.Collidable;
 import com.gdx.base.Orc;
-import com.gdx.base.WalkToPointsBehaviorPattern;
+import com.gdx.base.GuardBehaviorPattern;
 import com.gdx.input.Input;
 import com.gdx.input.Interface;
 import com.gdx.map.CollidableMapComponent;
@@ -77,13 +77,13 @@ public class Core extends ApplicationAdapter {
 		ArrayList<Point> route = new ArrayList<Point>();
 		route.add(new Point(400, 400));
 		route.add(new Point(500, 400));
-		WalkToPointsBehaviorPattern routeBehavior = new WalkToPointsBehaviorPattern(orc1, route);
+		GuardBehaviorPattern routeBehavior = new GuardBehaviorPattern(orc1, route);
 		orc1.setCurBehaviorPattern(routeBehavior);
-		WalkToPointsBehaviorPattern routeBehavior2 = new WalkToPointsBehaviorPattern(orc2, route);
+		GuardBehaviorPattern routeBehavior2 = new GuardBehaviorPattern(orc2, route);
 		orc2.setCurBehaviorPattern(routeBehavior2);
 		
 		drawableObjectContainer.add(orc1);
-		drawableObjectContainer.add(orc2);
+		//drawableObjectContainer.add(orc2);
 		drawableObjectContainer.add(player);
 	}
 	

@@ -70,6 +70,11 @@ public class DrawableObjectContainer {
 	 * mainly handling collidable stuff and behaviors
 	 */
 	private void updateDrawableCreature(Creature creature) {
+		for(DrawableObject drawableObject : this.drawableObjects) {
+			if(!drawableObject.equals(creature)) {
+				creature.handleProximity((Creature) drawableObject);
+			}
+		}
 		if(creature.getBehaviorPattern() != null) creature.getCurBehavior().execute();
 		//evaluate collisions with other objects
 		for(Collidable collidable : collidableObjects) {

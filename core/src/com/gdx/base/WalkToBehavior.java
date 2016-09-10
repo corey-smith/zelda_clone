@@ -15,18 +15,6 @@ public class WalkToBehavior extends Behavior {
 		super(behaviorPattern);
 		this.point = point;
 	}
-	
-	public BehaviorPattern getBehaviorPattern() {
-		return this.behaviorPattern;
-	}
-	
-	/**
-	 * Get creature that is employeeing the behavior
-	 * @return
-	 */
-	private Creature getCreature() {
-		return this.behaviorPattern.getCreature();
-	}
 
 	/**
 	 * Walk directly towards destination, go to next behavior if the destination is reached

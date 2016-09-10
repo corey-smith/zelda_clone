@@ -38,6 +38,11 @@ public abstract class BehaviorPattern {
 	public void setCurBehavior(Behavior curBehavior) {
 		this.curBehavior = curBehavior;
 	}
+
+	/**
+	 * Initialize or reinitialize this behavior
+	 */
+	public abstract void initializeBehavior();
 	
 	/**
 	 * Get creature that is employeeing the behavior

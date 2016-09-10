@@ -3,7 +3,7 @@ package com.gdx.base;
 import java.awt.Point;
 import java.util.ArrayList;
 
-public class WalkToPointsBehaviorPattern extends BehaviorPattern{
+public class GuardBehaviorPattern extends BehaviorPattern {
 
 	ArrayList<Point> pointList;
 	Point curPoint;
@@ -12,10 +12,17 @@ public class WalkToPointsBehaviorPattern extends BehaviorPattern{
 	 * Takes an arraylist of points and follows the points continuously
 	 * @param creature
 	 */
-	public WalkToPointsBehaviorPattern(Creature creature, ArrayList<Point> pointList) {
+	public GuardBehaviorPattern(Creature creature, ArrayList<Point> pointList) {
 		super(creature);
 		this.pointList = pointList;
 		this.curPoint = pointList.get(0);
+		initializeBehavior();
+	}
+	
+	/**
+	 * Reset the behavior to the last point
+	 */
+	public void initializeBehavior() {
 		this.curBehavior = new WalkToBehavior(this, curPoint);
 	}
 	

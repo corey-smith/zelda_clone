@@ -3,7 +3,6 @@ package com.gdx.base;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.gdx.map.Map;
-import com.gdx.core.DrawableObjectContainer;
 
 /**
  * Generic Creature class, essentially any DrawableObject that can move is a creature
@@ -25,6 +24,7 @@ public abstract class Creature extends DrawableObject {
 	
 	//current behavior of creature
 	public BehaviorPattern behaviorPattern = null;
+	public BehaviorPattern defaultBehaviorPattern = null;
 
 	//texture atlases for each protected Animation
 	protected TextureAtlas walkingLeft_txtr;
@@ -108,10 +108,14 @@ public abstract class Creature extends DrawableObject {
 	}
 	
 	/**
-	 * Set creature's behavior pattern
+	 * Set creature's behavior pattern, sets default behavior pattern if none exists
 	 */
 	public void setCurBehaviorPattern(BehaviorPattern behaviorPattern) {
 		this.behaviorPattern = behaviorPattern;
+		this.behaviorPattern.initializeBehavior();
+		if(this.defaultBehaviorPattern == null) {
+			this.defaultBehaviorPattern = behaviorPattern;
+		}
 	}
 	
 	/**
@@ -120,6 +124,22 @@ public abstract class Creature extends DrawableObject {
 	 */
 	public BehaviorPattern getBehaviorPattern() {
 		return this.behaviorPattern;
+	}
+	
+	/**
+	 * Set creature's default behavior pattern
+	 * @param defaultBehaviorPattern
+	 */
+	public void setDefaultBehaviorPattern(BehaviorPattern defaultBehaviorPattern) {
+		this.defaultBehaviorPattern = defaultBehaviorPattern;
+	}
+	
+	/**
+	 * Get creature's default behavior pattern
+	 * @return 
+	 */
+	public BehaviorPattern getDefaultBehaviorPattern() {
+		return this.defaultBehaviorPattern;
 	}
 	
 	/**
@@ -211,12 +231,6 @@ public abstract class Creature extends DrawableObject {
 		this.mapTop = curMap.getTopBound();
 		this.mapBottom = curMap.getBottomBound();
 	}
-
-	//TODO: handle creature collisions here
-	@Override
-	public void handleCollision(Collision collision, DrawableObjectContainer drawableObjectContainer, DrawableObject collider) {
-	
-	}
 	
 	/**
 	 * Handle collision, don't allow creature to walk further in the direction of the collision
@@ -232,4 +246,10 @@ public abstract class Creature extends DrawableObject {
 	 * load textures on a per-creature basis
 	 */
 	protected abstract void initializeTextures();
+	
+	/**
+	 * Check proximity of other object and handle accordingly
+	 * Do nothing by default and override as needed
+	 */
+	public void handleProximity(Creature otherCreature) {};
 }

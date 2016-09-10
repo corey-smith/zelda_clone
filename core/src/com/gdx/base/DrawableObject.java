@@ -70,6 +70,24 @@ public abstract class DrawableObject implements Collidable {
 	}
 	
 	/**
+	 * Get center x position of the drawable object
+	 * @return xCenter
+	 */
+	public float getXCenter() {
+		float xCenter = this.getXOffset() + this.width/2;
+		return xCenter;
+	}
+	
+	/**
+	 * Get center y position of the drawable object
+	 * @return yCenter
+	 */
+	public float getYCenter() {
+		float yCenter = this.getYOffset() + this.height/2;
+		return yCenter;
+	}
+	
+	/**
 	 * get x position within map
 	 * @return offsetX
 	 */
@@ -182,15 +200,25 @@ public abstract class DrawableObject implements Collidable {
 	}
 	
 	/**
-	 * handle collision given the object type
-	 * @param collision
-	 * @param drawableObjectContainer
-	 * @param collider
+	 * TODO: Find a better place to put this
+	 * Utility method to get distances between the center of this drawable object and the center of another
+	 * @param drawableObject
+	 * @return returnVal
 	 */
-	public abstract void handleCollision(Collision collision, DrawableObjectContainer drawableObjectContainer, DrawableObject collider);
+	public float getDistanceBetweenObject(DrawableObject drawableObject) {
+		Float returnVal = null;
+		returnVal = (float) Math.sqrt(Math.pow((drawableObject.getXCenter() - this.getXCenter()),2) + Math.pow((drawableObject.getYCenter() - this.getYCenter()),2));
+		return returnVal;
+	}
 	
 	/**
 	 * game loop logic
 	 */
 	public abstract void update();
+	
+	/**
+	 * Handle collisions
+	 * Default to nothing, override as needed
+	 */
+	public void handleCollision(Collision collision, DrawableObjectContainer drawableObjectContainer, DrawableObject collider) {};
 }
