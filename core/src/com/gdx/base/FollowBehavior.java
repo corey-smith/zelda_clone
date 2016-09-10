@@ -14,10 +14,8 @@ public class FollowBehavior extends Behavior {
 	 */
 	@Override
 	public void execute() {
-		if(this.getCreature().getXOffset() < this.followee.getXOffset()) this.getCreature().dx = this.getCreature().getMovementSpeed();
-		if(this.getCreature().getXOffset() > this.followee.getXOffset()) this.getCreature().dx = (this.getCreature().getMovementSpeed() * -1);
-		if(this.getCreature().getYOffset() < this.followee.getYOffset()) this.getCreature().dy = this.getCreature().getMovementSpeed();
-		if(this.getCreature().getYOffset() > this.followee.getYOffset()) this.getCreature().dy = (this.getCreature().getMovementSpeed() * -1);
+		Creature creature = this.getCreature();
+		creature.dx = creature.getDeltaValueByCoordinate(creature.getXOffset(), followee.getXOffset());
+		creature.dy = creature.getDeltaValueByCoordinate(creature.getYOffset(), followee.getYOffset());
 	}
-	
 }

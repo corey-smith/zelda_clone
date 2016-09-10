@@ -176,6 +176,21 @@ public abstract class Creature extends DrawableObject {
 	}
 	
 	/**
+	 * Get a dx/dy value given a starting coordinate and destination coordinate
+	 * This is to handle movement speeds in a common way to prevent overstepping
+	 */
+	public float getDeltaValueByCoordinate(float startingCoordinate, float endingCoordinate) {
+		float diff = (startingCoordinate - endingCoordinate);
+		float delta = 0;
+		//only move in that direction if the difference in the direction is greater than movement speed to avoid overstepping
+		if(Math.abs(diff) > movementSpeed) {
+			if(diff < 0) delta = movementSpeed;
+			else if(diff > 0) delta = (movementSpeed * -1);
+		}
+		return delta;
+	}
+	
+	/**
 	 * Method to run evaluate collision with other collidable objects and stop creature from walking through them
 	 * @param collidableObject - current collidable object being evaluated
 	 */

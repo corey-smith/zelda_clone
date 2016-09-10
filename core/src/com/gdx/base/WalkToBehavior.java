@@ -21,14 +21,9 @@ public class WalkToBehavior extends Behavior {
 	 */
 	@Override
 	public void execute() {
-		boolean xMet = false;
-		boolean yMet = false;
-		if(this.getCreature().getXOffset() < this.point.x) this.getCreature().dx = this.getCreature().getMovementSpeed();
-		else if(this.getCreature().getXOffset() > this.point.x) this.getCreature().dx = (this.getCreature().getMovementSpeed() * -1);
-		else xMet = true;
-		if(this.getCreature().getYOffset() < this.point.y) this.getCreature().dy = this.getCreature().getMovementSpeed();
-		else if(this.getCreature().getYOffset() > this.point.y) this.getCreature().dy = (this.getCreature().getMovementSpeed() * -1);
-		else yMet = true;
-		if(xMet && yMet) this.behaviorPattern.next();
+		Creature creature = this.getCreature();
+		creature.dx = creature.getDeltaValueByCoordinate(creature.getXOffset(), (float) this.point.x);
+		creature.dy = creature.getDeltaValueByCoordinate(creature.getYOffset(), (float) this.point.y);
+		if(creature.dx == 0 && creature.dy == 0) this.behaviorPattern.next();
 	}
 }
