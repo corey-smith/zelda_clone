@@ -36,8 +36,8 @@ public class Orc extends Creature {
 		if(otherCreature instanceof Player) {
 			double playerDistance = getDistanceBetweenObject(otherCreature);
 			if(playerDistance <= 75) {
-				this.getBehaviorPattern().setCurBehavior(new FollowBehavior(this.getBehaviorPattern(), otherCreature));
-			} else if(playerDistance > 150 && this.getCurBehavior() instanceof FollowBehavior) {
+				this.getBehaviorPattern().setCurBehavior(new PursueBehavior(this.getBehaviorPattern(), otherCreature));
+			} else if(playerDistance > 150 && this.getCurBehavior() instanceof PursueBehavior) {
 				this.setCurBehaviorPattern(this.getDefaultBehaviorPattern());
 			}
 		}

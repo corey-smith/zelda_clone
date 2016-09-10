@@ -3,6 +3,7 @@ package com.gdx.base;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.gdx.map.Map;
+import com.gdx.player.Player;
 
 /**
  * Generic Creature class, essentially any DrawableObject that can move is a creature
@@ -12,6 +13,10 @@ public abstract class Creature extends DrawableObject {
 	//protected Animation speed - hardcoded
 	protected Float animSpeed = 2/15f;
 	protected Float movementSpeed;
+	
+	//distance used by proximate checker, this is used to tell a creature how close the player should be before pursuing
+	private float proximateDistance;
+	
 	//buffer in pixels for preventing collisions' alternate directions from sticking
 	protected Integer collisionBuffer;
     
@@ -25,6 +30,7 @@ public abstract class Creature extends DrawableObject {
 	//current behavior of creature
 	public BehaviorPattern behaviorPattern = null;
 	public BehaviorPattern defaultBehaviorPattern = null;
+	private Behavior hostileBehavior = null;
 
 	//texture atlases for each protected Animation
 	protected TextureAtlas walkingLeft_txtr;
@@ -65,6 +71,7 @@ public abstract class Creature extends DrawableObject {
 		loadAnimations();
 		setCurAnim(standingRight_anim);
 		setMovementSpeed();
+		setProximateDistance();
 	}
 	
 	/**
@@ -100,11 +107,26 @@ public abstract class Creature extends DrawableObject {
 	}
 	
 	/**
-	 * Get movement speed of creature
+	 * Get proximate distance of creature
 	 * @return 
 	 */
-	public float getMovementSpeed() {
-		return this.movementSpeed;
+	public float getProximateDistance() {
+		return this.proximateDistance;
+	}
+	
+	/**
+	 * Set proximate distance
+	 * @param movementSpeed
+	 */
+	protected void setProximateDistance(float proximateDistance) {
+		this.proximateDistance = proximateDistance;
+	}
+	
+	/**
+	 * Default proximate distance of 100
+	 */
+	void setProximateDistance() {
+		this.setProximateDistance(100f);
 	}
 	
 	/**
@@ -237,6 +259,24 @@ public abstract class Creature extends DrawableObject {
 	}
 	
 	/**
+	 * Check proximity of other object and handle accordingly
+	 * By default see if the proximate creature is the player, and set the behavior to the hostile behavior if it is
+	 */
+	public void handleProximity(Creature otherCreature) {
+		//currently just evaluating against the player, this can be expanded out to other creature-to-creature interactions though
+		if(otherCreature instanceof Player) {
+			double playerDistance = getDistanceBetweenObject(otherCreature);
+			if(playerDistance <= this.proximateDistance) {
+				if(this.hostileBehavior== null) this.hostileBehavior = new PursueBehavior(this.getBehaviorPattern(), otherCreature); 
+				this.getBehaviorPattern().setCurBehavior(this.hostileBehavior);
+			//stop following if the player is too far away, hard-coded to proximate distance * 2
+			} else if(playerDistance > (this.proximateDistance*2) && this.getCurBehavior() instanceof PursueBehavior) {
+				this.setCurBehaviorPattern(this.getDefaultBehaviorPattern());
+			}
+		}
+	}
+	
+	/**
 	 * set map bounds once here on initializing map to use in updating player
 	 * @param curMap
 	 */
@@ -261,10 +301,5 @@ public abstract class Creature extends DrawableObject {
 	 * load textures on a per-creature basis
 	 */
 	protected abstract void initializeTextures();
-	
-	/**
-	 * Check proximity of other object and handle accordingly
-	 * Do nothing by default and override as needed
-	 */
-	public void handleProximity(Creature otherCreature) {};
+
 }
