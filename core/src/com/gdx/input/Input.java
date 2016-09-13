@@ -15,6 +15,7 @@ public class Input implements InputProcessor{
 	public boolean rightHeld = false;
 	public boolean upHeld = false;
 	public boolean downHeld = false;
+	public boolean attackHeld = false;
 
 	//initialize
 	public Input() {
@@ -33,6 +34,8 @@ public class Input implements InputProcessor{
 			upHeld = true;
 		} else if(keycode == keyBindings.keyMap.get(UserKey.DOWN)) {
 			downHeld = true;
+		} else if(keycode == keyBindings.keyMap.get(UserKey.ATTACK)) {
+			attackHeld = true;
 		}
 		return false;
 	}
@@ -48,6 +51,8 @@ public class Input implements InputProcessor{
 			upHeld = false;
 		} else if(keycode == keyBindings.keyMap.get(UserKey.DOWN)) {
 			downHeld = false;
+		} else if(keycode == keyBindings.keyMap.get(UserKey.ATTACK)) {
+			attackHeld = false;
 		}
 		return false;
 	}

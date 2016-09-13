@@ -29,6 +29,7 @@ class KeyBindings {
 		returnMap.put(UserKey.RIGHT, Keys.RIGHT);
 		returnMap.put(UserKey.UP, Keys.UP);
 		returnMap.put(UserKey.DOWN, Keys.DOWN);
+		returnMap.put(UserKey.ATTACK, Keys.Z);
 		return returnMap;
 	}
 	

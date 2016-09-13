@@ -19,6 +19,7 @@ public class Player extends Creature {
 	
 	//variables to determine when the player is walking to another map
 	public boolean linking = false;
+	public boolean attacking = false;
 	public String toMap;
 	public String fromMap;
 	public String toLink;
@@ -80,7 +81,18 @@ public class Player extends Creature {
 		if(input.downHeld && !input.upHeld) {
 			this.dy = (movementSpeed*-1);
 		}
+		if(input.attackHeld) {
+			this.attacking = true;
+			this.attack();
+		}
 		handleLinks(linkableObjects);
+	}
+	
+	/**
+	 * Method to handle attack, should start animation and actual attack itself
+	 */
+	public void attack() {
+		System.out.println("attacking");
 	}
 	
 	//TODO: This needs to move to the creature class after AI is implemented for creatures

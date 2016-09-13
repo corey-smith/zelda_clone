@@ -8,5 +8,6 @@ public enum UserKey {
 	LEFT,
 	RIGHT,
 	UP,
-	DOWN
+	DOWN,
+	ATTACK
 }
