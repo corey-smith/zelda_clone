@@ -13,13 +13,14 @@ public class Sword extends Weapon {
 
 	@Override
 	public void initialize() {
+		this.animSpeed = 1/20f;
 		attackCreatureUp_txtr = new TextureAtlas(Gdx.files.internal("images/player/attacks/link_attack_up_pack"));
-		attackCreatureUp_anim = new Animation(this.weaponCreature.getAnimSpeed(), attackCreatureUp_txtr.getRegions());
+		attackCreatureUp_anim = new Animation(animSpeed, attackCreatureUp_txtr.getRegions());
 	}
 
 	@Override
 	public void attack() {
-		this.weaponCreature.setCurAnim(attackCreatureUp_anim);
+		this.weaponCreature.setOverrideAnim(attackCreatureUp_anim);
 	}
 	
 }

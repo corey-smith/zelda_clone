@@ -23,6 +23,7 @@ public abstract class Weapon {
 	protected Animation attackCreatureRight_anim;
 	protected Animation attackCreatureUp_anim;
 	protected Animation attackCreatureDown_anim;
+	protected float animSpeed;
 	
 	//TODO:Add weaponizable interface that links this class to an Item class so this doesn't have to extend drawableObject, since it really isn't a drawableObject
 	/**
@@ -30,6 +31,8 @@ public abstract class Weapon {
 	 */
 	public Weapon(Creature weaponCreature) {
 		this.weaponCreature = weaponCreature;
+		//default animation speed to creature's animation speed, this can be overridden at the individual weapon level
+		this.animSpeed = weaponCreature.getAnimSpeed();
 		initialize();
 	}
 	

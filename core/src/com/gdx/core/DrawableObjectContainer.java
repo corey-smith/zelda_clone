@@ -47,7 +47,7 @@ public class DrawableObjectContainer {
 		drawableObjectIter = drawableObjects.iterator();
 		while(drawableObjectIter.hasNext()) {
 			DrawableObject drawableObject = drawableObjectIter.next();
-			batch.draw(drawableObject.getCurAnim().getKeyFrame(elapsedTime, true), drawableObject.getXOffset(), drawableObject.getYOffset());
+			drawableObject.draw(batch);
 		}
 	}
 	

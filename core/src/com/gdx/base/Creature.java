@@ -110,7 +110,7 @@ public abstract class Creature extends DrawableObject {
 	 * Get animation speed - this may need to go to DrawableObject.java
 	 * @return animSpeed
 	 */
-	float getAnimSpeed() {
+	public float getAnimSpeed() {
 		return this.animSpeed;
 	}
 	
