@@ -107,6 +107,14 @@ public abstract class Creature extends DrawableObject {
 	}
 	
 	/**
+	 * Get animation speed - this may need to go to DrawableObject.java
+	 * @return animSpeed
+	 */
+	float getAnimSpeed() {
+		return this.animSpeed;
+	}
+	
+	/**
 	 * Get proximate distance of creature
 	 * @return 
 	 */

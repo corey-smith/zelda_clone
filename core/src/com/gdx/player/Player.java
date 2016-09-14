@@ -6,6 +6,7 @@ import java.util.Iterator;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.gdx.base.Creature;
+import com.gdx.base.Sword;
 import com.gdx.input.Input;
 import com.gdx.map.LinkableObject;
 
@@ -92,6 +93,8 @@ public class Player extends Creature {
 	 * Method to handle attack, should start animation and actual attack itself
 	 */
 	public void attack() {
+		Sword sword = new Sword(this);
+		sword.attack();
 		System.out.println("attacking");
 	}
 	

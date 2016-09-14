@@ -7,11 +7,11 @@ import com.gdx.base.Creature;
 public abstract class Weapon {
 
 	//Creature owner of weapon
-	Creature weaponCreature;
+	protected Creature weaponCreature;
 	//creature's animation while performing attack, should be single loop of animation frames
 	//attack animation, only pertains to attacks that have animations outside of the attackingCreatureAnim
-	Animation attackAnim;
-	float attackDamage;
+	protected Animation attackAnim;
+	protected float attackDamage;
 	
 	//TextureAtlases, Animations
 	//creature's animation while performing attack, should be single loop of animation frames
@@ -19,10 +19,10 @@ public abstract class Weapon {
 	protected TextureAtlas attackCreatureRight_txtr;
 	protected TextureAtlas attackCreatureUp_txtr;
 	protected TextureAtlas attackCreatureDown_txtr;
-	protected Animation attackCreatureLeftAnim;
-	protected Animation attackCreatureRightAnim;
-	protected Animation attackCreatureUpAnim;
-	protected Animation attackCreatureDownAnim;
+	protected Animation attackCreatureLeft_anim;
+	protected Animation attackCreatureRight_anim;
+	protected Animation attackCreatureUp_anim;
+	protected Animation attackCreatureDown_anim;
 	
 	//TODO:Add weaponizable interface that links this class to an Item class so this doesn't have to extend drawableObject, since it really isn't a drawableObject
 	/**
