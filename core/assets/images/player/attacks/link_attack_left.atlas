@@ -1,0 +1,27 @@
+
+link_attack_left.png
+size: 256,128
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+link_attack_left0
+  rotate: false
+  xy: 2, 36
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+link_attack_left1
+  rotate: false
+  xy: 68, 36
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+link_attack_left2
+  rotate: false
+  xy: 2, 2
+  size: 64, 32
+  orig: 64, 32
+  offset: 0, 0
+  index: -1

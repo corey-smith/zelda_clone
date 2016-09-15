@@ -1,0 +1,27 @@
+
+link_attack_down.png
+size: 64,256
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+attacking_down0
+  rotate: false
+  xy: 2, 2
+  size: 60, 32
+  orig: 60, 32
+  offset: 0, 0
+  index: -1
+attacking_down1
+  rotate: false
+  xy: 2, 101
+  size: 60, 63
+  orig: 60, 63
+  offset: 0, 0
+  index: -1
+attacking_down2
+  rotate: false
+  xy: 2, 36
+  size: 60, 63
+  orig: 60, 63
+  offset: 0, 0
+  index: -1
