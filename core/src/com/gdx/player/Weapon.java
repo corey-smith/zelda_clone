@@ -37,10 +37,27 @@ public abstract class Weapon {
 	}
 	
 	/**
-	 * Should intitialize animations and damage
-	 * @return 
+	 * Initialize textures and animations
 	 */
-	public abstract void initialize();
+	public void initialize() {
+		initializeTextures();
+		initializeAnimations();
+	}
+	
+	/**
+	 * Load texture files
+	 */
+	public abstract void initializeTextures();
+	
+	/**
+	 * Load animations given the already, loaded texture files
+	 */
+	public void initializeAnimations() {
+		attackCreatureUp_anim = new Animation(animSpeed, attackCreatureUp_txtr.getRegions());
+		attackCreatureDown_anim = new Animation(animSpeed, attackCreatureDown_txtr.getRegions());
+		attackCreatureLeft_anim = new Animation(animSpeed, attackCreatureLeft_txtr.getRegions());
+		attackCreatureRight_anim = new Animation(animSpeed, attackCreatureRight_txtr.getRegions());
+	}
 	
 	/**
 	 * Handle actual attack, including animations

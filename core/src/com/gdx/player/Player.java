@@ -95,7 +95,6 @@ public class Player extends Creature {
 	public void attack() {
 		Sword sword = new Sword(this);
 		sword.attack();
-		System.out.println("attacking");
 	}
 	
 	//TODO: This needs to move to the creature class after AI is implemented for creatures
