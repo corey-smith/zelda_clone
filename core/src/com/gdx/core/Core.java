@@ -36,7 +36,7 @@ public class Core extends ApplicationAdapter {
 	//input and player objects
 	Input input;
 	Player player;
-	DrawableObjectContainer drawableObjectContainer;
+	DrawableObjectQueue drawableObjectQueue;
 	
 	//camera
 	Camera camera;
@@ -70,7 +70,7 @@ public class Core extends ApplicationAdapter {
 		initializeCamera();
 		initializeMap("testMap");
 		
-		drawableObjectContainer = new DrawableObjectContainer(batch, player, curMap, camera, collidableObjects, linkableObjects);
+		drawableObjectQueue = new DrawableObjectQueue(batch, player, curMap, camera, collidableObjects, linkableObjects);
 		
 		Orc orc1 = new Orc(500, 400);
 		Orc orc2 = new Orc(400, 400);
@@ -82,9 +82,9 @@ public class Core extends ApplicationAdapter {
 		GuardBehaviorPattern routeBehavior2 = new GuardBehaviorPattern(orc2, route);
 		orc2.setCurBehaviorPattern(routeBehavior2);
 		
-		drawableObjectContainer.add(orc1);
+		//drawableObjectContainer.add(orc1);
 		//drawableObjectContainer.add(orc2);
-		drawableObjectContainer.add(player);
+		drawableObjectQueue.add(player);
 	}
 	
 	/**
@@ -137,8 +137,7 @@ public class Core extends ApplicationAdapter {
 		batch.begin();
 		//elapsed time just goes up, the true param tells it to loop
 		elapsedTime += Gdx.graphics.getDeltaTime();
-		batch.draw(player.getCurAnim().getKeyFrame(elapsedTime, true), player.getXOffset(), player.getYOffset());
-		drawableObjectContainer.drawDrawableObjects(elapsedTime);
+		drawableObjectQueue.drawDrawableObjects(elapsedTime);
 		batch.end();
 	}
 	
@@ -146,7 +145,7 @@ public class Core extends ApplicationAdapter {
 	 * main method for the game loop
 	 */
 	public void gameLoop() {
-		drawableObjectContainer.updateDrawableObjects();
+		drawableObjectQueue.updateDrawableObjects();
 		setCameraPosition();
 		handleLinks();
 	}

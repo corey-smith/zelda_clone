@@ -3,7 +3,7 @@ package com.gdx.base;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.gdx.core.DrawableObjectContainer;
+import com.gdx.core.DrawableObjectQueue;
 
 /**
  * Generic object class for anything that can be drawn on screen, should be creatures and items
@@ -261,5 +261,5 @@ public abstract class DrawableObject implements Collidable {
 	 * Handle collisions
 	 * Default to nothing, override as needed
 	 */
-	public void handleCollision(Collision collision, DrawableObjectContainer drawableObjectContainer, DrawableObject collider) {};
+	public void handleCollision(Collision collision, DrawableObjectQueue drawableObjectContainer, DrawableObject collider) {};
 }

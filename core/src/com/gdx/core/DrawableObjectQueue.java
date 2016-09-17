@@ -11,7 +11,7 @@ import com.gdx.base.Creature;
 import com.gdx.base.DrawableObject;
 import com.gdx.player.Player;
 
-public class DrawableObjectContainer {
+public class DrawableObjectQueue {
 
 	SpriteBatch batch;
 	Player player;
@@ -23,13 +23,14 @@ public class DrawableObjectContainer {
 	ArrayList<LinkableObject> linkableObjects;
 	
 	/**
-	 * Container to hold all of the current drawable objects and coordinate between them
+	 * Queue to hold all of the current drawable objects and coordinate between them
+	 * Generally used to just loop through and update/draw all drawable objects
 	 * @param batch
 	 * @param player
 	 * @param curMap
 	 * @param camera
 	 */
-	public DrawableObjectContainer(SpriteBatch batch, Player player, Map curMap, Camera camera, ArrayList<Collidable> collidableObjects, ArrayList<LinkableObject> linkableObjects) {
+	public DrawableObjectQueue(SpriteBatch batch, Player player, Map curMap, Camera camera, ArrayList<Collidable> collidableObjects, ArrayList<LinkableObject> linkableObjects) {
 		this.batch = batch;
 		this.player = player;
 		this.map = curMap;

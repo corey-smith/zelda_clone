@@ -3,7 +3,7 @@ package com.gdx.base;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.gdx.core.DrawableObjectContainer;
+import com.gdx.core.DrawableObjectQueue;
 import com.gdx.player.Player;
 
 public class Item extends DrawableObject {
@@ -23,7 +23,7 @@ public class Item extends DrawableObject {
 	}
 
 	@Override
-	public void handleCollision(Collision collision, DrawableObjectContainer drawableObjectContainer, DrawableObject collider) {
+	public void handleCollision(Collision collision, DrawableObjectQueue drawableObjectContainer, DrawableObject collider) {
 		//we don't really care if a creature runs into an object, just if the player does
 		if(collider instanceof Player) {
 			//remove from map, add to player's inventory

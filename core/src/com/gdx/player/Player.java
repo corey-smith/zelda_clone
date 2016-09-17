@@ -83,8 +83,10 @@ public class Player extends Creature {
 			this.dy = (movementSpeed*-1);
 		}
 		if(input.attackHeld) {
+			if(!this.attacking) this.attack();
 			this.attacking = true;
-			this.attack();
+		} else {
+			if(overrideAnim == null) this.attacking = false;
 		}
 		handleLinks(linkableObjects);
 	}
