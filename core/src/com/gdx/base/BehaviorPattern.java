@@ -2,8 +2,8 @@ package com.gdx.base;
 
 public abstract class BehaviorPattern {
 
-	Creature creature;
-	Behavior curBehavior;
+	protected Creature creature;
+	protected Behavior curBehavior;
 	
 	/**
 	 * Abstract class to dictate where a creature should be moving to

@@ -1,7 +1,8 @@
-package com.gdx.base;
+package com.gdx.item;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.gdx.item.weapon.Item;
 
 public class Ruby extends Item{
 

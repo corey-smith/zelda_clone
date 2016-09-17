@@ -1,6 +1,10 @@
-package com.gdx.base;
+package com.gdx.creature.behavior;
 
 import java.awt.Point;
+
+import com.gdx.base.Behavior;
+import com.gdx.base.BehaviorPattern;
+import com.gdx.base.Creature;
 
 public class WalkToBehavior extends Behavior {
 

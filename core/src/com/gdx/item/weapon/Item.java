@@ -1,8 +1,10 @@
-package com.gdx.base;
+package com.gdx.item.weapon;
 
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.gdx.base.Collision;
+import com.gdx.base.DrawableObject;
 import com.gdx.core.DrawableObjectQueue;
 import com.gdx.player.Player;
 

@@ -18,8 +18,8 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.gdx.base.Collidable;
-import com.gdx.base.Orc;
-import com.gdx.base.GuardBehaviorPattern;
+import com.gdx.creature.Orc;
+import com.gdx.creature.behavior.GuardBehaviorPattern;
 import com.gdx.input.Input;
 import com.gdx.input.Interface;
 import com.gdx.map.CollidableMapComponent;
@@ -82,8 +82,8 @@ public class Core extends ApplicationAdapter {
 		GuardBehaviorPattern routeBehavior2 = new GuardBehaviorPattern(orc2, route);
 		orc2.setCurBehaviorPattern(routeBehavior2);
 		
-		//drawableObjectContainer.add(orc1);
-		//drawableObjectContainer.add(orc2);
+		drawableObjectQueue.add(orc1);
+		//drawableObjectQueue.add(orc2);
 		drawableObjectQueue.add(player);
 	}
 	

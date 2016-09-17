@@ -1,7 +1,7 @@
 package com.gdx.base;
 
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.gdx.anim.AnimationContainer;
+import com.gdx.creature.behavior.PursueBehavior;
 import com.gdx.map.Map;
 import com.gdx.player.Player;
 
@@ -32,25 +32,9 @@ public abstract class Creature extends DrawableObject {
 	public BehaviorPattern defaultBehaviorPattern = null;
 	private Behavior hostileBehavior = null;
 
-	//texture atlases for each protected Animation
-	protected TextureAtlas walkingLeft_txtr;
-	protected TextureAtlas walkingRight_txtr;
-	protected TextureAtlas walkingDown_txtr;
-	protected TextureAtlas walkingUp_txtr;
-	protected TextureAtlas standingLeft_txtr;
-	protected TextureAtlas standingRight_txtr;
-	protected TextureAtlas standingDown_txtr;
-	protected TextureAtlas standingUp_txtr;
-	
-	//protected Animation classes for each protected Animation
-	protected Animation walkingLeft_anim;
-	protected Animation walkingRight_anim;
-	protected Animation walkingDown_anim;
-	protected Animation walkingUp_anim;
-	protected Animation standingLeft_anim;
-	protected Animation standingRight_anim;
-	protected Animation standingDown_anim;
-	protected Animation standingUp_anim;
+	protected AnimationContainer standingAnimContainer;
+	protected AnimationContainer walkingAnimContainer;
+	protected AnimationContainer curAnimContainer;
 	
 	/**
 	 * Creature constructor, takes the x and y coordinates of creature
@@ -68,26 +52,10 @@ public abstract class Creature extends DrawableObject {
 	 */
 	private void initialize() {
 		initializeTextures();
-		loadAnimations();
-		setCurAnim(standingRight_anim);
+		this.curAnimContainer = this.standingAnimContainer;
+		setCurAnim(this.curAnimContainer.getDownAnim());
 		setMovementSpeed();
 		setProximateDistance();
-	}
-	
-	/**
-	 * Generic method to load animations - assumes the different walking/standing textures have been instantiated
-	 */
-	public void loadAnimations() {
-		walkingLeft_anim = new Animation(animSpeed, walkingLeft_txtr.getRegions());
-		walkingRight_anim = new Animation(animSpeed, walkingRight_txtr.getRegions());
-		walkingUp_anim = new Animation(animSpeed, walkingUp_txtr.getRegions());
-		walkingDown_anim = new Animation(animSpeed, walkingDown_txtr.getRegions());
-		standingLeft_anim = new Animation(animSpeed, standingLeft_txtr.getRegions());
-		standingRight_anim = new Animation(animSpeed, standingRight_txtr.getRegions());
-		standingUp_anim = new Animation(animSpeed, standingUp_txtr.getRegions());
-		standingDown_anim = new Animation(animSpeed, standingDown_txtr.getRegions());
-		//default a starting animation
-		this.setCurAnim(standingDown_anim);
 	}
 	
 	/**
@@ -193,15 +161,15 @@ public abstract class Creature extends DrawableObject {
 		this.offsetY += this.dy;
 		//handle animations
 		if(dx < 0) {
-			this.curAnim = walkingLeft_anim;
+			this.curAnim = this.walkingAnimContainer.getLeftAnim();
 		}
 		else if(dx > 0) {
-			this.curAnim = walkingRight_anim;
+			this.curAnim = this.walkingAnimContainer.getRightAnim();
 		}
 		if(dy > 0) {
-			this.curAnim = walkingUp_anim;
+			this.curAnim = this.walkingAnimContainer.getUpAnim();
 		} else if(dy < 0) {
-			this.curAnim = walkingDown_anim;
+			this.curAnim = this.walkingAnimContainer.getDownAnim();
 		}
 	}
 	

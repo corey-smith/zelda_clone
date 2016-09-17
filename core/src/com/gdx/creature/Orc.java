@@ -1,7 +1,9 @@
-package com.gdx.base;
+package com.gdx.creature;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.gdx.anim.AnimationFactory;
+import com.gdx.anim.AnimationType;
+import com.gdx.base.Creature;
+import com.gdx.creature.behavior.PursueBehavior;
 import com.gdx.player.Player;
 
 public class Orc extends Creature {
@@ -19,15 +21,8 @@ public class Orc extends Creature {
 	@Override
 	protected void initializeTextures() {
 		//load texture atlases
-		walkingLeft_txtr = new TextureAtlas(Gdx.files.internal("images/creatures/orc_walk_left.atlas"));
-		walkingRight_txtr = new TextureAtlas(Gdx.files.internal("images/creatures/orc_walk_right.atlas"));
-		walkingUp_txtr = new TextureAtlas(Gdx.files.internal("images/creatures/orc_walk_up.atlas"));
-		walkingDown_txtr = new TextureAtlas(Gdx.files.internal("images/creatures/orc_walk_down.atlas"));
-		standingLeft_txtr = new TextureAtlas(Gdx.files.internal("images/creatures/orc_stand_left.atlas"));
-		standingRight_txtr = new TextureAtlas(Gdx.files.internal("images/creatures/orc_stand_right.atlas"));
-		standingUp_txtr = new TextureAtlas(Gdx.files.internal("images/creatures/orc_stand_up.atlas"));
-		standingDown_txtr = new TextureAtlas(Gdx.files.internal("images/creatures/orc_stand_down.atlas"));
-		this.loadAnimations();
+		standingAnimContainer = AnimationFactory.initializeAnimationContainer("images/creatures/orc_stand_up_pack", AnimationType.STAND, animSpeed);
+		walkingAnimContainer = AnimationFactory.initializeAnimationContainer("images/creatures/orc_walk_up_pack", AnimationType.WALK, animSpeed);
 	}
 	
 	//TODO: make this more generic, separate out a default hostile behavior and put all of this in the creature class instead of here

@@ -2,7 +2,7 @@ package com.gdx.base;
 
 public abstract class Behavior {
 
-	BehaviorPattern behaviorPattern;
+	protected BehaviorPattern behaviorPattern;
 	
 	/**
 	 * Abstract class to dictate where a creature should be doing

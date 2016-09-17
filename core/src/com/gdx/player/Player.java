@@ -3,8 +3,8 @@ package com.gdx.player;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.gdx.anim.AnimationFactory;
+import com.gdx.anim.AnimationType;
 import com.gdx.base.Creature;
 import com.gdx.base.Sword;
 import com.gdx.input.Input;
@@ -48,19 +48,13 @@ public class Player extends Creature {
 	}
 	
 	/**
-	 * Initialize player textures
+	 * Load animation containers
 	 */
 	@Override
-	public void initializeTextures() {
+	protected void initializeTextures() {
 		//load texture atlases
-		walkingLeft_txtr = new TextureAtlas(Gdx.files.internal("images/player/player_walk_left_pack"));
-		walkingRight_txtr = new TextureAtlas(Gdx.files.internal("images/player/player_walk_right_pack"));
-		walkingUp_txtr = new TextureAtlas(Gdx.files.internal("images/player/player_walk_up_pack"));
-		walkingDown_txtr = new TextureAtlas(Gdx.files.internal("images/player/player_walk_down_pack"));
-		standingLeft_txtr = new TextureAtlas(Gdx.files.internal("images/player/player_stand_left_pack"));
-		standingRight_txtr = new TextureAtlas(Gdx.files.internal("images/player/player_stand_right_pack"));
-		standingUp_txtr = new TextureAtlas(Gdx.files.internal("images/player/player_stand_up_pack"));
-		standingDown_txtr = new TextureAtlas(Gdx.files.internal("images/player/player_stand_down_pack"));
+		standingAnimContainer = AnimationFactory.initializeAnimationContainer("images/player/player_stand_up_pack", AnimationType.STAND, animSpeed);
+		walkingAnimContainer = AnimationFactory.initializeAnimationContainer("images/player/player_walk_up_pack", AnimationType.WALK, animSpeed);
 	}
 	
 	/**
@@ -106,15 +100,15 @@ public class Player extends Creature {
 	public void preLoop() {
 		this.dx = 0;
 		this.dy = 0;
-		if(this.curAnim == walkingLeft_anim || this.curAnim == standingLeft_anim) { 
-			this.curAnim = standingLeft_anim;
-		} else if(this.curAnim == walkingRight_anim || this.curAnim == standingRight_anim) {
-			this.curAnim = standingRight_anim;
-		} else if(this.curAnim == walkingUp_anim || this.curAnim == standingUp_anim) {
-			this.curAnim = standingUp_anim;
+		if(this.curAnim == this.walkingAnimContainer.getLeftAnim() || this.curAnim == this.standingAnimContainer.getLeftAnim()) { 
+			this.curAnim = this.standingAnimContainer.getLeftAnim();
+		} else if(this.curAnim == this.walkingAnimContainer.getRightAnim() || this.curAnim == this.standingAnimContainer.getRightAnim()) {
+			this.curAnim = this.standingAnimContainer.getRightAnim();
+		} else if(this.curAnim == this.walkingAnimContainer.getUpAnim() || this.curAnim == this.standingAnimContainer.getUpAnim()) {
+			this.curAnim = this.standingAnimContainer.getUpAnim();
 			//default to something
 		} else {
-			this.curAnim = standingDown_anim;
+			this.curAnim = this.standingAnimContainer.getDownAnim();
 		}
 	}
 	

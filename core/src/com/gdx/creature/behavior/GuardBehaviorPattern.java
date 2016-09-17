@@ -1,7 +1,10 @@
-package com.gdx.base;
+package com.gdx.creature.behavior;
 
 import java.awt.Point;
 import java.util.ArrayList;
+
+import com.gdx.base.BehaviorPattern;
+import com.gdx.base.Creature;
 
 public class GuardBehaviorPattern extends BehaviorPattern {
 
