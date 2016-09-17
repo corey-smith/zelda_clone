@@ -2,7 +2,7 @@ package com.gdx.player;
 
 import java.util.ArrayList;
 
-import com.gdx.item.weapon.Item;
+import com.gdx.base.Item;
 
 /**
  * Player inventory, this is essentially just a wrapper class for an ArrayList of items

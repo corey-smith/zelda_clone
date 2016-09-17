@@ -34,7 +34,6 @@ public abstract class Creature extends DrawableObject {
 
 	protected AnimationContainer standingAnimContainer;
 	protected AnimationContainer walkingAnimContainer;
-	protected AnimationContainer curAnimContainer;
 	
 	/**
 	 * Creature constructor, takes the x and y coordinates of creature
@@ -156,20 +155,23 @@ public abstract class Creature extends DrawableObject {
 	 */
 	@Override
 	public void update() {
-		//move creature
+		//set animation container
+		if(this.dx == 0 && this.dy == 0) this.curAnimContainer = this.standingAnimContainer;
+		else this.curAnimContainer = this.walkingAnimContainer;
+		
 		this.offsetX += this.dx;
 		this.offsetY += this.dy;
 		//handle animations
 		if(dx < 0) {
-			this.curAnim = this.walkingAnimContainer.getLeftAnim();
+			this.curAnim = this.curAnimContainer.getLeftAnim();
 		}
 		else if(dx > 0) {
-			this.curAnim = this.walkingAnimContainer.getRightAnim();
+			this.curAnim = this.curAnimContainer.getRightAnim();
 		}
 		if(dy > 0) {
-			this.curAnim = this.walkingAnimContainer.getUpAnim();
+			this.curAnim = this.curAnimContainer.getUpAnim();
 		} else if(dy < 0) {
-			this.curAnim = this.walkingAnimContainer.getDownAnim();
+			this.curAnim = this.curAnimContainer.getDownAnim();
 		}
 	}
 	

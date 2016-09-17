@@ -6,8 +6,8 @@ import java.util.Iterator;
 import com.gdx.anim.AnimationFactory;
 import com.gdx.anim.AnimationType;
 import com.gdx.base.Creature;
-import com.gdx.base.Sword;
 import com.gdx.input.Input;
+import com.gdx.item.weapon.Sword;
 import com.gdx.map.LinkableObject;
 
 public class Player extends Creature {
@@ -100,11 +100,11 @@ public class Player extends Creature {
 	public void preLoop() {
 		this.dx = 0;
 		this.dy = 0;
-		if(this.curAnim == this.walkingAnimContainer.getLeftAnim() || this.curAnim == this.standingAnimContainer.getLeftAnim()) { 
+		if(this.curAnim == this.curAnimContainer.getLeftAnim()) { 
 			this.curAnim = this.standingAnimContainer.getLeftAnim();
-		} else if(this.curAnim == this.walkingAnimContainer.getRightAnim() || this.curAnim == this.standingAnimContainer.getRightAnim()) {
+		} else if(this.curAnim == this.curAnimContainer.getRightAnim()) {
 			this.curAnim = this.standingAnimContainer.getRightAnim();
-		} else if(this.curAnim == this.walkingAnimContainer.getUpAnim() || this.curAnim == this.standingAnimContainer.getUpAnim()) {
+		} else if(this.curAnim == this.curAnimContainer.getUpAnim()) {
 			this.curAnim = this.standingAnimContainer.getUpAnim();
 			//default to something
 		} else {

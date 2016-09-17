@@ -16,6 +16,13 @@ public class AnimationContainer {
 	Animation upAnim;
 	Animation downAnim;
 	
+	/**
+	 * Class to contain animations, this is to group animations into their corresponding directions
+	 * and to link them to an animation type - this is so I can link animations to thier corresponding actions in-game
+	 * pretty much as a way to group common code and to tell if a single-animation is completed and write logic around it depending on the animation type
+	 * @param type - animation type enum
+	 * @param animSpeed - creature's animation speed
+	 */
 	public AnimationContainer(AnimationType type, float animSpeed) {
 		this.type = type;
 		this.animSpeed = animSpeed;

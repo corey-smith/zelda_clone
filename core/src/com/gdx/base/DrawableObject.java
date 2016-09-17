@@ -3,6 +3,7 @@ package com.gdx.base;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.gdx.anim.AnimationContainer;
 import com.gdx.core.DrawableObjectQueue;
 
 /**
@@ -12,8 +13,10 @@ public abstract class DrawableObject implements Collidable {
 
 	//current animation of object
 	public Animation curAnim;
+	public AnimationContainer curAnimContainer;
 	//single animation that overrides the current animation before returning to drawing curAnim
 	public Animation overrideAnim;
+	public AnimationContainer overrideAnimContainer;
 	public float elapsedTime;
 	
 	//initial X/Y locations, this should match absolute location except when on edge of map
@@ -84,14 +87,15 @@ public abstract class DrawableObject implements Collidable {
 	}
 	
 	/**
-	 * Set override animation
+	 * Set override animation container
 	 * Override animation is processed once and then the object returns to it's default animation
 	 * This is essentially a one-time animation
 	 * @param overrideAnim
 	 */
-	public void setOverrideAnim(Animation overrideAnim) {
+	public void setOverrideAnimContainer(AnimationContainer overrideAnimContainer) {
 		this.elapsedTime = 0;
-		this.overrideAnim = overrideAnim;
+		this.overrideAnimContainer = overrideAnimContainer;
+		this.overrideAnim = overrideAnimContainer.getUpAnim();
 	}
 	
 	/**
