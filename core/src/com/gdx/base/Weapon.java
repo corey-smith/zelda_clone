@@ -1,7 +1,6 @@
 package com.gdx.base;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.gdx.anim.AnimationContainer;
 
 public abstract class Weapon {

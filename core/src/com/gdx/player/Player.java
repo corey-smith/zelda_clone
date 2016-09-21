@@ -100,15 +100,15 @@ public class Player extends Creature {
 	public void preLoop() {
 		this.dx = 0;
 		this.dy = 0;
-		if(this.curAnim == this.curAnimContainer.getLeftAnim()) { 
-			this.curAnim = this.standingAnimContainer.getLeftAnim();
-		} else if(this.curAnim == this.curAnimContainer.getRightAnim()) {
-			this.curAnim = this.standingAnimContainer.getRightAnim();
-		} else if(this.curAnim == this.curAnimContainer.getUpAnim()) {
-			this.curAnim = this.standingAnimContainer.getUpAnim();
+		if(this.getCurAnim().equals(this.walkingAnimContainer.getLeftAnim()) || this.getCurAnim().equals(this.standingAnimContainer.getLeftAnim())) {
+			this.setCurAnim(this.standingAnimContainer.getLeftAnim());
+		} else if(this.getCurAnim() == this.walkingAnimContainer.getRightAnim() || this.getCurAnim() == this.standingAnimContainer.getRightAnim()) {
+			this.setCurAnim(this.standingAnimContainer.getRightAnim());
+		} else if(this.getCurAnim() == this.walkingAnimContainer.getUpAnim() || this.getCurAnim() == this.standingAnimContainer.getUpAnim()) {
+			this.setCurAnim(this.standingAnimContainer.getUpAnim());
 			//default to something
 		} else {
-			this.curAnim = this.standingAnimContainer.getDownAnim();
+			this.setCurAnim(this.standingAnimContainer.getDownAnim());
 		}
 	}
 	

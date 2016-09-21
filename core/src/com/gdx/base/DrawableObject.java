@@ -11,8 +11,7 @@ import com.gdx.core.DrawableObjectQueue;
  */
 public abstract class DrawableObject implements Collidable {
 
-	//current animation of object
-	public Animation curAnim;
+	//current animation container of object
 	public AnimationContainer curAnimContainer;
 	//single animation that overrides the current animation before returning to drawing curAnim
 	public Animation overrideAnim;
@@ -55,7 +54,7 @@ public abstract class DrawableObject implements Collidable {
 			//if this is the last frame, reset to null
 			if(overrideAnim.isAnimationFinished(this.elapsedTime)) resetOverrideAnim();
 		} else {
-			batch.draw(this.curAnim.getKeyFrame(this.elapsedTime, true), this.getXOffset(), this.getYOffset());
+			batch.draw(this.getCurAnim().getKeyFrame(this.elapsedTime, true), this.getXOffset(), this.getYOffset());
 		}
 	}
 	
@@ -64,10 +63,9 @@ public abstract class DrawableObject implements Collidable {
 	 * @param curAnim
 	 */
 	public void setCurAnim(Animation curAnim) {
-		this.elapsedTime = 0;
-		this.curAnim = curAnim;
-		this.setWidth(curAnim.getKeyFrame(0).getRegionWidth());
-		this.setHeight(curAnim.getKeyFrame(0).getRegionHeight());
+		this.curAnimContainer.setCurAnim(curAnim);
+		this.setWidth(this.curAnimContainer.getCurAnim().getKeyFrame(0).getRegionWidth());
+		this.setHeight(this.curAnimContainer.getCurAnim().getKeyFrame(0).getRegionHeight());
 	}
 	
 	/**
@@ -75,7 +73,7 @@ public abstract class DrawableObject implements Collidable {
 	 * @return curAnim
 	 */
 	public Animation getCurAnim() {
-		return curAnim;
+		return this.curAnimContainer.getCurAnim();
 	}
 	
 	/**

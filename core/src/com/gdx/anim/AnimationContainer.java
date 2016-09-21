@@ -7,6 +7,7 @@ public class AnimationContainer {
 
 	AnimationType type;
 	float animSpeed;
+	Animation curAnim;
 	TextureAtlas leftTxtr;
 	TextureAtlas rightTxtr;
 	TextureAtlas upTxtr;
@@ -52,6 +53,14 @@ public class AnimationContainer {
 		this.downAnim = new Animation(this.animSpeed, downTxtr.getRegions());
 	}
 	
+	public void setCurAnim(Animation anim) {
+		this.curAnim = anim;
+	}
+	
+	public Animation getCurAnim() {
+		return this.curAnim;
+	}
+	
 	public Animation getLeftAnim() {
 		return this.leftAnim;
 	}
@@ -86,5 +95,9 @@ public class AnimationContainer {
 	
 	public float getAnimSpeed() {
 		return this.animSpeed;
+	}
+	
+	public AnimationType getAnimType() {
+		return this.type;
 	}
 }

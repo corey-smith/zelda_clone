@@ -163,15 +163,15 @@ public abstract class Creature extends DrawableObject {
 		this.offsetY += this.dy;
 		//handle animations
 		if(dx < 0) {
-			this.curAnim = this.curAnimContainer.getLeftAnim();
+			this.setCurAnim(this.curAnimContainer.getLeftAnim());
 		}
 		else if(dx > 0) {
-			this.curAnim = this.curAnimContainer.getRightAnim();
+			this.setCurAnim(this.curAnimContainer.getRightAnim());
 		}
 		if(dy > 0) {
-			this.curAnim = this.curAnimContainer.getUpAnim();
+			this.setCurAnim(this.curAnimContainer.getUpAnim());
 		} else if(dy < 0) {
-			this.curAnim = this.curAnimContainer.getDownAnim();
+			this.setCurAnim(this.curAnimContainer.getDownAnim());
 		}
 	}
 	
