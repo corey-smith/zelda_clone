@@ -52,7 +52,7 @@ public abstract class Creature extends DrawableObject {
 	private void initialize() {
 		initializeTextures();
 		this.curAnimContainer = this.standingAnimContainer;
-		setCurAnim(this.curAnimContainer.getDownAnim());
+		this.setCurAnim(this.standingAnimContainer.getDownAnim());
 		setMovementSpeed();
 		setProximateDistance();
 	}
@@ -163,15 +163,15 @@ public abstract class Creature extends DrawableObject {
 		this.offsetY += this.dy;
 		//handle animations
 		if(dx < 0) {
-			this.setCurAnim(this.curAnimContainer.getLeftAnim());
+			this.setCurAnim(this.walkingAnimContainer.getLeftAnim());
 		}
 		else if(dx > 0) {
-			this.setCurAnim(this.curAnimContainer.getRightAnim());
+			this.setCurAnim(this.walkingAnimContainer.getRightAnim());
 		}
 		if(dy > 0) {
-			this.setCurAnim(this.curAnimContainer.getUpAnim());
+			this.setCurAnim(this.walkingAnimContainer.getUpAnim());
 		} else if(dy < 0) {
-			this.setCurAnim(this.curAnimContainer.getDownAnim());
+			this.setCurAnim(this.walkingAnimContainer.getDownAnim());
 		}
 	}
 	

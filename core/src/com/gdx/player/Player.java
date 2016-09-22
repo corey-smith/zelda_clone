@@ -77,10 +77,10 @@ public class Player extends Creature {
 			this.dy = (movementSpeed*-1);
 		}
 		if(input.attackHeld) {
-			if(!this.attacking) this.attack();
-			this.attacking = true;
+			//if(!this.attacking) this.attack();
+			//this.attacking = true;
 		} else {
-			if(overrideAnim == null) this.attacking = false;
+			//if(overrideAnim == null) this.attacking = false;
 		}
 		handleLinks(linkableObjects);
 	}
@@ -100,11 +100,11 @@ public class Player extends Creature {
 	public void preLoop() {
 		this.dx = 0;
 		this.dy = 0;
-		if(this.getCurAnim().equals(this.walkingAnimContainer.getLeftAnim()) || this.getCurAnim().equals(this.standingAnimContainer.getLeftAnim())) {
+		if(this.getCurAnim() == this.curAnimContainer.getLeftAnim()) {
 			this.setCurAnim(this.standingAnimContainer.getLeftAnim());
-		} else if(this.getCurAnim() == this.walkingAnimContainer.getRightAnim() || this.getCurAnim() == this.standingAnimContainer.getRightAnim()) {
+		} else if(this.getCurAnim() == this.curAnimContainer.getRightAnim()) {
 			this.setCurAnim(this.standingAnimContainer.getRightAnim());
-		} else if(this.getCurAnim() == this.walkingAnimContainer.getUpAnim() || this.getCurAnim() == this.standingAnimContainer.getUpAnim()) {
+		} else if(this.getCurAnim() == this.curAnimContainer.getUpAnim()) {
 			this.setCurAnim(this.standingAnimContainer.getUpAnim());
 			//default to something
 		} else {

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.gdx.anim.AnimationContainer;
+import com.gdx.anim.GameAnim;
 import com.gdx.core.DrawableObjectQueue;
 
 /**
@@ -62,7 +63,8 @@ public abstract class DrawableObject implements Collidable {
 	 * Set current animation
 	 * @param curAnim
 	 */
-	public void setCurAnim(Animation curAnim) {
+	public void setCurAnim(GameAnim curAnim) {
+		this.curAnimContainer = curAnim.getAnimContainer();
 		this.curAnimContainer.setCurAnim(curAnim);
 		this.setWidth(this.curAnimContainer.getCurAnim().getKeyFrame(0).getRegionWidth());
 		this.setHeight(this.curAnimContainer.getCurAnim().getKeyFrame(0).getRegionHeight());

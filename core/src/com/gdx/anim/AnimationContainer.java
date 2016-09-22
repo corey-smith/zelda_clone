@@ -1,21 +1,20 @@
 package com.gdx.anim;
 
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 public class AnimationContainer {
 
 	AnimationType type;
 	float animSpeed;
-	Animation curAnim;
+	GameAnim curAnim;
 	TextureAtlas leftTxtr;
 	TextureAtlas rightTxtr;
 	TextureAtlas upTxtr;
 	TextureAtlas downTxtr;
-	Animation leftAnim;
-	Animation rightAnim;
-	Animation upAnim;
-	Animation downAnim;
+	GameAnim leftAnim;
+	GameAnim rightAnim;
+	GameAnim upAnim;
+	GameAnim downAnim;
 	
 	/**
 	 * Class to contain animations, this is to group animations into their corresponding directions
@@ -35,45 +34,45 @@ public class AnimationContainer {
 	
 	protected void setLeftTxtr(TextureAtlas leftTxtr) {
 		this.leftTxtr = leftTxtr;
-		this.leftAnim = new Animation(this.animSpeed, leftTxtr.getRegions());
+		this.leftAnim = new GameAnim(this.animSpeed, leftTxtr.getRegions(), this);
 	}
 	
 	protected void setRightTxtr(TextureAtlas rightTxtr) {
 		this.rightTxtr = rightTxtr;
-		this.rightAnim = new Animation(this.animSpeed, rightTxtr.getRegions());
+		this.rightAnim = new GameAnim(this.animSpeed, rightTxtr.getRegions(), this);
 	}
 	
 	protected void setUpTxtr(TextureAtlas upTxtr) {
 		this.upTxtr = upTxtr;
-		this.upAnim = new Animation(this.animSpeed, upTxtr.getRegions());
+		this.upAnim = new GameAnim(this.animSpeed, upTxtr.getRegions(), this);
 	}
 	
 	protected void setDownTxtr(TextureAtlas downTxtr) {
 		this.downTxtr = downTxtr;
-		this.downAnim = new Animation(this.animSpeed, downTxtr.getRegions());
+		this.downAnim = new GameAnim(this.animSpeed, downTxtr.getRegions(), this);
 	}
 	
-	public void setCurAnim(Animation anim) {
+	public void setCurAnim(GameAnim anim) {
 		this.curAnim = anim;
 	}
 	
-	public Animation getCurAnim() {
+	public GameAnim getCurAnim() {
 		return this.curAnim;
 	}
 	
-	public Animation getLeftAnim() {
+	public GameAnim getLeftAnim() {
 		return this.leftAnim;
 	}
 	
-	public Animation getRightAnim() {
+	public GameAnim getRightAnim() {
 		return this.rightAnim;
 	}
 	
-	public Animation getUpAnim() {
+	public GameAnim getUpAnim() {
 		return this.upAnim;
 	}
 	
-	public Animation getDownAnim() {
+	public GameAnim getDownAnim() {
 		return this.downAnim;
 	}
 	

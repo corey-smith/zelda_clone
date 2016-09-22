@@ -1,8 +1,8 @@
 package com.gdx.base;
 
 
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.gdx.anim.GameAnim;
 import com.gdx.core.DrawableObjectQueue;
 import com.gdx.player.Player;
 
@@ -19,7 +19,7 @@ public class Item extends DrawableObject {
 	
 	protected void setTxtr(TextureAtlas txtr) {
 		this.txtr = txtr;
-		this.setCurAnim(new Animation(animSpeed, txtr.getRegions()));
+		this.setCurAnim(new GameAnim(animSpeed, txtr.getRegions()));
 	}
 
 	@Override
