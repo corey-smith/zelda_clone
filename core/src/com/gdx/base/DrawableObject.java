@@ -115,7 +115,6 @@ public abstract class DrawableObject implements Collidable {
 	 */
 	public void setOverrideAnimContainer(AnimationContainer overrideAnimContainer) {
 		this.elapsedTime = 0;
-		this.setCurAnim(overrideAnimContainer.getUpAnim());
 		this.overrideAnimContainer = overrideAnimContainer;
 		this.overrideAnim = overrideAnimContainer.getUpAnim();
 	}
