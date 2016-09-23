@@ -5,7 +5,9 @@ import java.util.Iterator;
 
 import com.gdx.anim.AnimationFactory;
 import com.gdx.anim.AnimationType;
+import com.gdx.base.Collidable;
 import com.gdx.base.Creature;
+import com.gdx.base.Direction;
 import com.gdx.input.Input;
 import com.gdx.item.weapon.Sword;
 import com.gdx.map.LinkableObject;
@@ -80,7 +82,7 @@ public class Player extends Creature {
 			if(!this.attacking) this.attack();
 			this.attacking = true;
 		} else {
-			if(overrideAnim == null) this.attacking = false;
+			if(this.GetCurAnimConatiner().getAnimType() != AnimationType.ATTACK) this.attacking = false;
 		}
 		handleLinks(linkableObjects);
 	}
@@ -157,5 +159,10 @@ public class Player extends Creature {
 	 */
 	public Inventory getInventory() {
 		return this.inventory;
+	}
+
+	@Override
+	public void handleCollision(ArrayList<Direction> directions, Collidable collidableObject) {
+		//do nothing
 	}
 }

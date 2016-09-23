@@ -1,7 +1,6 @@
 package com.gdx.base;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.gdx.anim.AnimationContainer;
 import com.gdx.anim.GameAnim;
@@ -15,7 +14,7 @@ public abstract class DrawableObject implements Collidable {
 	//current animation container of object
 	public AnimationContainer curAnimContainer;
 	//single animation that overrides the current animation before returning to drawing curAnim
-	public Animation overrideAnim;
+	public GameAnim overrideAnim;
 	public AnimationContainer overrideAnimContainer;
 	public float elapsedTime;
 	
@@ -74,8 +73,29 @@ public abstract class DrawableObject implements Collidable {
 	 * return current animation to draw in Core.java
 	 * @return curAnim
 	 */
-	public Animation getCurAnim() {
-		return this.curAnimContainer.getCurAnim();
+	public GameAnim getCurAnim() {
+		GameAnim returnAnim = null;
+		if(this.overrideAnim != null) {
+			returnAnim = this.overrideAnimContainer.getCurAnim();
+		} else {
+			returnAnim = this.curAnimContainer.getCurAnim();
+		}
+		return returnAnim;
+	}
+	
+	/**
+	 * Get current animationContainer
+	 * @return curAnimContainer
+	 */
+	public AnimationContainer GetCurAnimConatiner() {
+		AnimationContainer returnAnimContainer = null;
+		if(this.overrideAnimContainer != null) {
+			returnAnimContainer = this.overrideAnimContainer;
+		} else {
+			returnAnimContainer = this.curAnimContainer;
+		}
+		return returnAnimContainer;
+		
 	}
 	
 	/**
@@ -84,6 +104,7 @@ public abstract class DrawableObject implements Collidable {
 	public void resetOverrideAnim() {
 		this.elapsedTime = 0;
 		this.overrideAnim = null;
+		this.overrideAnimContainer = null;
 	}
 	
 	/**
@@ -94,6 +115,7 @@ public abstract class DrawableObject implements Collidable {
 	 */
 	public void setOverrideAnimContainer(AnimationContainer overrideAnimContainer) {
 		this.elapsedTime = 0;
+		this.setCurAnim(overrideAnimContainer.getUpAnim());
 		this.overrideAnimContainer = overrideAnimContainer;
 		this.overrideAnim = overrideAnimContainer.getUpAnim();
 	}

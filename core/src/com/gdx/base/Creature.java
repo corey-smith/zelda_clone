@@ -1,5 +1,7 @@
 package com.gdx.base;
 
+import java.util.ArrayList;
+
 import com.gdx.anim.AnimationContainer;
 import com.gdx.creature.behavior.PursueBehavior;
 import com.gdx.map.Map;
@@ -163,7 +165,7 @@ public abstract class Creature extends DrawableObject {
 		//moving
 		else {
 			this.curAnimContainer = this.walkingAnimContainer;
-		
+
 			this.offsetX += this.dx;
 			this.offsetY += this.dy;
 			//handle animations
@@ -230,14 +232,28 @@ public abstract class Creature extends DrawableObject {
 			//new X and Y will be somewhere within the tile's X/Y bounds
 			//this if statement indicates there is a collision
 			if(xColl && yColl) {
+				ArrayList<Direction> directions = new ArrayList<Direction>();
 				//collision to the right - if traveling right and x value is to the left of the object's right bound and current Y value is between object's Y bounds
-				if(creatureRight - collisionBuffer <= objectLeft && (creatureTop > objectBottom && creatureBottom < objectTop)) this.dx = 0;
+				if(creatureRight - collisionBuffer <= objectLeft && (creatureTop > objectBottom && creatureBottom < objectTop)) {
+					directions.add(Direction.RIGHT);
+					this.dx = 0;
+				}
 				//collision to the left - if traveling left and x value is to the right of the object's left bound and current Y value is between object's Y bounds
-				else if(creatureLeft < objectRight + collisionBuffer && (creatureTop > objectBottom && creatureBottom < objectTop)) this.dx = 0;
+				else if(creatureLeft < objectRight + collisionBuffer && (creatureTop > objectBottom && creatureBottom < objectTop)) {
+					directions.add(Direction.LEFT);
+					this.dx = 0;
+				}
 				//collision above - if traveling up and y value is below the object's bottom bound and current X value is between object's X bounds
-				if(creatureTop - collisionBuffer <= objectBottom && (creatureRight > objectLeft && creatureLeft < objectRight)) this.dy = 0;
+				if(creatureTop - collisionBuffer <= objectBottom && (creatureRight > objectLeft && creatureLeft < objectRight)) {
+					directions.add(Direction.UP);
+					this.dy = 0;
+				}
 				//collision below - if traveling down and y value is above the object's top bound and current X value is between object's X bounds
-				else if(creatureBottom < objectTop + collisionBuffer && (creatureRight > objectLeft && creatureLeft < objectRight)) this.dy = 0;
+				else if(creatureBottom < objectTop + collisionBuffer && (creatureRight > objectLeft && creatureLeft < objectRight)) {
+					directions.add(Direction.DOWN);
+					this.dy = 0;
+				}
+				this.handleCollision(directions, collidableObject);
 			}
 		}
 	}
@@ -280,6 +296,12 @@ public abstract class Creature extends DrawableObject {
 		if(collision == Collision.LEFT && this.dx < 0) this.dx = 0;
 		if(collision == Collision.RIGHT && this.dx > 0) this.dx = 0;
 	}
+	
+	/**
+	 * Evaluate collisions with other creatures and handle special logic
+	 * @return 
+	 */
+	public abstract void handleCollision(ArrayList<Direction> directions, Collidable collidableObject);
 	
 	/**
 	 * load textures on a per-creature basis
