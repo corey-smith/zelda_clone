@@ -16,6 +16,8 @@ public abstract class Creature extends DrawableObject {
 	protected Float animSpeed = 2/15f;
 	protected Float movementSpeed;
 	
+	public Direction curDirection;
+	
 	//distance used by proximate checker, this is used to tell a creature how close the player should be before pursuing
 	private float proximateDistance;
 	
@@ -54,7 +56,8 @@ public abstract class Creature extends DrawableObject {
 	private void initialize() {
 		initializeTextures();
 		this.curAnimContainer = this.standingAnimContainer;
-		this.setCurAnim(this.curAnimContainer.getDownAnim());
+		this.curDirection = Direction.DOWN;
+		this.setCurAnimContainer(this.standingAnimContainer);
 		setMovementSpeed();
 		setProximateDistance();
 	}
@@ -152,6 +155,14 @@ public abstract class Creature extends DrawableObject {
 	}
 	
 	/**
+	 * Get current direction creature is facing
+	 * @return
+	 */
+	public Direction getDirection() {
+		return this.curDirection;
+	}
+	
+	/**
 	 * Main loop logic for updating a creature
 	 * executes the current behavior and handles animation and collidables
 	 */
@@ -160,26 +171,25 @@ public abstract class Creature extends DrawableObject {
 		//set animation container
 		//not moving
 		if(this.dx == 0 && this.dy == 0) {
-			this.curAnimContainer = this.standingAnimContainer;
+			this.setCurAnimContainer(this.standingAnimContainer);
 		}
 		//moving
 		else {
-			this.curAnimContainer = this.walkingAnimContainer;
-
 			this.offsetX += this.dx;
 			this.offsetY += this.dy;
 			//handle animations
 			if(dx < 0) {
-				this.setCurAnim(this.curAnimContainer.getLeftAnim());
+				this.curDirection = Direction.LEFT;
 			}
 			else if(dx > 0) {
-				this.setCurAnim(this.curAnimContainer.getRightAnim());
+				this.curDirection = Direction.RIGHT;
 			}
 			if(dy > 0) {
-				this.setCurAnim(this.curAnimContainer.getUpAnim());
+				this.curDirection = Direction.UP;
 			} else if(dy < 0) {
-				this.setCurAnim(this.curAnimContainer.getDownAnim());
+				this.curDirection = Direction.DOWN;
 			}
+			this.setCurAnimContainer(this.walkingAnimContainer);
 		}
 	}
 	

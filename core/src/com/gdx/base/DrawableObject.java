@@ -59,6 +59,17 @@ public abstract class DrawableObject implements Collidable {
 	}
 	
 	/**
+	 * Set current animation container, this is a common place to figure out relevant directions for creatures
+	 * This should only be called for creatures
+	 * @param curAnimContainer
+	 */
+	public void setCurAnimContainer(AnimationContainer curAnimContainer) {
+		Creature creature = (Creature) this;
+		System.out.println(creature.getDirection());
+		this.setCurAnim(curAnimContainer.getAnimByDirection(creature.getDirection()));
+	}
+	
+	/**
 	 * Set current animation
 	 * @param curAnim
 	 */
@@ -116,7 +127,7 @@ public abstract class DrawableObject implements Collidable {
 	public void setOverrideAnimContainer(AnimationContainer overrideAnimContainer) {
 		this.elapsedTime = 0;
 		this.overrideAnimContainer = overrideAnimContainer;
-		this.overrideAnim = overrideAnimContainer.getUpAnim();
+		this.overrideAnim = overrideAnimContainer.getLeftAnim();
 	}
 	
 	/**

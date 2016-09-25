@@ -1,6 +1,7 @@
 package com.gdx.anim;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.gdx.base.Direction;
 
 public class AnimationContainer {
 
@@ -50,6 +51,16 @@ public class AnimationContainer {
 	protected void setDownTxtr(TextureAtlas downTxtr) {
 		this.downTxtr = downTxtr;
 		this.downAnim = new GameAnim(this.animSpeed, downTxtr.getRegions(), this);
+	}
+	
+	public GameAnim getAnimByDirection(Direction direction) {
+		switch(direction) {
+			case LEFT : return this.leftAnim;
+			case RIGHT : return this.rightAnim;
+			case UP : return this.upAnim;
+			case DOWN : return this.downAnim;
+		}
+		return null;
 	}
 	
 	public void setCurAnim(GameAnim anim) {

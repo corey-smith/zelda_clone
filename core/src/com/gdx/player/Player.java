@@ -102,16 +102,7 @@ public class Player extends Creature {
 	public void preLoop() {
 		this.dx = 0;
 		this.dy = 0;
-		if(this.getCurAnim() == this.curAnimContainer.getLeftAnim()) {
-			this.setCurAnim(this.standingAnimContainer.getLeftAnim());
-		} else if(this.getCurAnim() == this.curAnimContainer.getRightAnim()) {
-			this.setCurAnim(this.standingAnimContainer.getRightAnim());
-		} else if(this.getCurAnim() == this.curAnimContainer.getUpAnim()) {
-			this.setCurAnim(this.standingAnimContainer.getUpAnim());
-			//default to something
-		} else {
-			this.setCurAnim(this.standingAnimContainer.getDownAnim());
-		}
+		this.setCurAnimContainer(this.standingAnimContainer);
 	}
 	
 	/**
