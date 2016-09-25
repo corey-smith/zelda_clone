@@ -65,7 +65,6 @@ public abstract class DrawableObject implements Collidable {
 	 */
 	public void setCurAnimContainer(AnimationContainer curAnimContainer) {
 		Creature creature = (Creature) this;
-		System.out.println(creature.getDirection());
 		this.setCurAnim(curAnimContainer.getAnimByDirection(creature.getDirection()));
 	}
 	
@@ -122,12 +121,14 @@ public abstract class DrawableObject implements Collidable {
 	 * Set override animation container
 	 * Override animation is processed once and then the object returns to it's default animation
 	 * This is essentially a one-time animation
+	 * Note: This currently only works for Creatures
 	 * @param overrideAnim
 	 */
 	public void setOverrideAnimContainer(AnimationContainer overrideAnimContainer) {
 		this.elapsedTime = 0;
+		Creature creature = (Creature) this;
 		this.overrideAnimContainer = overrideAnimContainer;
-		this.overrideAnim = overrideAnimContainer.getLeftAnim();
+		this.overrideAnim = overrideAnimContainer.getAnimByDirection(creature.curDirection);
 	}
 	
 	/**
