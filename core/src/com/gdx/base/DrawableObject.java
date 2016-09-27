@@ -50,11 +50,11 @@ public abstract class DrawableObject implements Collidable {
 	public void draw(SpriteBatch batch) {
 		elapsedTime += Gdx.graphics.getDeltaTime();
 		if(this.overrideAnim != null) {
-			batch.draw(this.overrideAnim.getKeyFrame(this.elapsedTime, true), this.getXOffset(), this.getYOffset());
+			batch.draw(this.getCurAnim().getKeyFrame(this.elapsedTime, true), this.getAnimOffsetX(), this.getAnimOffsetY());
 			//if this is the last frame, reset to null
 			if(overrideAnim.isAnimationFinished(this.elapsedTime)) resetOverrideAnim();
 		} else {
-			batch.draw(this.getCurAnim().getKeyFrame(this.elapsedTime, true), this.getXOffset(), this.getYOffset());
+			batch.draw(this.getCurAnim().getKeyFrame(this.elapsedTime, true), this.getAnimOffsetX(), this.getAnimOffsetY());
 		}
 	}
 	
@@ -129,6 +129,7 @@ public abstract class DrawableObject implements Collidable {
 		Creature creature = (Creature) this;
 		this.overrideAnimContainer = overrideAnimContainer;
 		this.overrideAnim = overrideAnimContainer.getAnimByDirection(creature.curDirection);
+		this.overrideAnimContainer.setCurAnim(this.overrideAnim);
 	}
 	
 	/**
@@ -198,6 +199,22 @@ public abstract class DrawableObject implements Collidable {
 	}
 	
 	/**
+	 * Get animation's offset, account for offsets in different animations
+	 * @return - the objects X offset plus the X offset of the animation
+	 */
+	public float getAnimOffsetX() {
+		return this.getXOffset() + this.getCurAnim().getOffsetX();
+	}
+	
+	/**
+	 * Get animation's offset, account for offsets in different animations
+	 * @return - the objects X offset plus the X offset of the animation
+	 */
+	public float getAnimOffsetY() {
+		return this.getYOffset() + this.getCurAnim().getOffsetY();
+	}
+	
+	/**
 	 * get width
 	 * @return width
 	 */
@@ -234,15 +251,15 @@ public abstract class DrawableObject implements Collidable {
 	 * @return offsetX + width
 	 */
 	public float getRightBound() {
-		return this.offsetX + this.width;
+		return this.getXOffset() + this.width;
 	}
 	
 	/**
 	 * get left bound
-	 * @return offsetX
+	 * @return offsetX + animation offsetX
 	 */
 	public float getLeftBound() {
-		return this.offsetX;
+		return this.getXOffset();
 	}
 	
 	/**
@@ -250,7 +267,7 @@ public abstract class DrawableObject implements Collidable {
 	 * @return offsetY + height
 	 */
 	public float getTopBound() {
-		return this.offsetY + this.height;
+		return this.getYOffset() + this.height;
 	}
 	
 	/**
@@ -258,7 +275,7 @@ public abstract class DrawableObject implements Collidable {
 	 * @return offsetY
 	 */
 	public float getBottomBound() {
-		return this.offsetY;
+		return this.getYOffset();
 	}
 	
 	/**

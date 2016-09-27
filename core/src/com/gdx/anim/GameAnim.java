@@ -7,6 +7,8 @@ import com.badlogic.gdx.utils.Array;
 public class GameAnim extends Animation {
 
 	AnimationContainer animContainer;
+	float offsetX;
+	float offsetY;
 	
 	public GameAnim(float frameDuration, Array<? extends TextureRegion> keyFrames) {
 		super(frameDuration, keyFrames);
@@ -20,5 +22,21 @@ public class GameAnim extends Animation {
 	public AnimationContainer getAnimContainer() {
 		return this.animContainer;
 	}
-
+	
+	public float getOffsetX() {
+		return this.offsetX;
+	}
+	
+	public float getOffsetY() {
+		return this.offsetY;
+	}
+	
+	//TODO: Ideally we shouldn't have to set any of these manually.
+	public void setOffsetX(float offsetX) {
+		this.offsetX = offsetX;
+	}
+	
+	public void setOffsetY(float offsetY) {
+		this.offsetY = offsetY;
+	}
 }
