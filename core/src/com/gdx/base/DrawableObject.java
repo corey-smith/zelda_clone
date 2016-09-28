@@ -2,6 +2,7 @@ package com.gdx.base;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.gdx.anim.AnimationContainer;
 import com.gdx.anim.GameAnim;
 import com.gdx.core.DrawableObjectQueue;
@@ -50,11 +51,11 @@ public abstract class DrawableObject implements Collidable {
 	public void draw(SpriteBatch batch) {
 		elapsedTime += Gdx.graphics.getDeltaTime();
 		if(this.overrideAnim != null) {
-			batch.draw(this.getCurAnim().getKeyFrame(this.elapsedTime, true), this.getAnimOffsetX(), this.getAnimOffsetY());
+			batch.draw(this.getCurRegion(), this.getAnimOffsetX(), this.getAnimOffsetY());
 			//if this is the last frame, reset to null
 			if(overrideAnim.isAnimationFinished(this.elapsedTime)) resetOverrideAnim();
 		} else {
-			batch.draw(this.getCurAnim().getKeyFrame(this.elapsedTime, true), this.getAnimOffsetX(), this.getAnimOffsetY());
+			batch.draw(this.getCurRegion(), this.getAnimOffsetX(), this.getAnimOffsetY());
 		}
 	}
 	
@@ -91,6 +92,15 @@ public abstract class DrawableObject implements Collidable {
 			returnAnim = this.curAnimContainer.getCurAnim();
 		}
 		return returnAnim;
+	}
+	
+	/**
+	 * Get current animation region from the animation and the elapsed time
+	 * This assumes we're always looping, anywhere we shouldn't be looping should handle it manually
+	 * @return - current region
+	 */
+	public TextureRegion getCurRegion() {
+		return this.getCurAnim().getKeyFrame(elapsedTime, true);
 	}
 	
 	/**
@@ -251,7 +261,7 @@ public abstract class DrawableObject implements Collidable {
 	 * @return offsetX + width
 	 */
 	public float getRightBound() {
-		return this.getXOffset() + this.width;
+		return this.getXOffset() + this.getCurRegion().getRegionWidth();
 	}
 	
 	/**
@@ -259,7 +269,7 @@ public abstract class DrawableObject implements Collidable {
 	 * @return offsetX + animation offsetX
 	 */
 	public float getLeftBound() {
-		return this.getXOffset();
+		return this.getAnimOffsetX();
 	}
 	
 	/**
@@ -267,7 +277,7 @@ public abstract class DrawableObject implements Collidable {
 	 * @return offsetY + height
 	 */
 	public float getTopBound() {
-		return this.getYOffset() + this.height;
+		return this.getAnimOffsetY() + this.getCurRegion().getRegionHeight();
 	}
 	
 	/**
@@ -275,7 +285,7 @@ public abstract class DrawableObject implements Collidable {
 	 * @return offsetY
 	 */
 	public float getBottomBound() {
-		return this.getYOffset();
+		return this.getAnimOffsetY();
 	}
 	
 	/**

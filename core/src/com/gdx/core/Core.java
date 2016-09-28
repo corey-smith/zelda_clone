@@ -82,7 +82,7 @@ public class Core extends ApplicationAdapter {
 		GuardBehaviorPattern routeBehavior2 = new GuardBehaviorPattern(orc2, route);
 		orc2.setCurBehaviorPattern(routeBehavior2);
 		
-		//drawableObjectQueue.add(orc1);
+		drawableObjectQueue.add(orc1);
 		//drawableObjectQueue.add(orc2);
 		drawableObjectQueue.add(player);
 	}
