@@ -50,6 +50,8 @@ public abstract class DrawableObject implements Collidable {
 	 */
 	public void draw(SpriteBatch batch) {
 		elapsedTime += Gdx.graphics.getDeltaTime();
+		this.setWidth(this.getCurRegion().getRegionWidth());
+		this.setHeight(this.getCurRegion().getRegionHeight());
 		if(this.overrideAnim != null) {
 			batch.draw(this.getCurRegion(), this.getAnimOffsetX(), this.getAnimOffsetY());
 			//if this is the last frame, reset to null
@@ -76,8 +78,6 @@ public abstract class DrawableObject implements Collidable {
 	public void setCurAnim(GameAnim curAnim) {
 		this.curAnimContainer = curAnim.getAnimContainer();
 		this.curAnimContainer.setCurAnim(curAnim);
-		this.setWidth(this.curAnimContainer.getCurAnim().getKeyFrame(0).getRegionWidth());
-		this.setHeight(this.curAnimContainer.getCurAnim().getKeyFrame(0).getRegionHeight());
 	}
 	
 	/**
